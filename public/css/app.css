@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+body {
+    font-family: "Poppins", serif;
+    background: #f4f4f4;
+}
+
+.bmi-tool {
+    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+        /* 50% black overlay */ url("../images/fruits_bg.png") no-repeat center
+            center / cover; /* Centered, cover background */
+}
+
+img {
+    max-width: 100%;
+}
+
+.list-instructors .floating-info {
+    bottom: 10px;
+}
+
+@media (min-width: 768px) {
+    .list-instructors .floating-info {
+        top: 60% !important;
+        right: 10px !important;
+        bottom: unset !important;
+    }
+}
