@@ -15,36 +15,84 @@
 </head>
 
 <body>
-    {{-- banner --}}
-    <div class="hidden">
-        <div class="">LOGO</div>
-        <div class="">
-            <p>Western Mindanao State University</p>
-            <p>College of Home Economics</p>
-            <p>Department of Nutrition and Dietetics</p>
-            <p>Online Consultation Clinic</p>
-        </div>
-        <div class="">LOGO</div>
-    </div>
+
+
+
 
     {{-- header --}}
-    <header class="">
-        <div class="container flex items-center justify-center min-h-screen p-5 ">
-            {{-- navigator --}}
-            <div class="fixed top-0 left-0 z-10 flex justify-between w-full px-5 py-10 bg-white shadow-md navigator">
-                <div class="">Home</div>
-                <div class=""><i class="fa-solid fa-bars"></i></div>
-            </div>
+    <header class="relative flex flex-col min-h-screen home-header">
 
-            <div class="">
-                <h1 class="text-3xl font-bold uppercase ">Reach your instructor from anywhere</h1>
-                <p class="pt-5 pb-10 text-slate-700">Get in touch with your instructor anytime, anywhere, for instant
-                    guidance and support.</p>
-                <p
-                    class="px-8 py-4 text-lg font-medium tracking-wider text-white uppercase bg-green-800 border rounded-md w-fit">
-                    Book Now</p>
+        {{-- banner --}}
+        <div class="w-full py-5 text-center bg-green-800 lg:block text-light-white">
+            <div class="flex items-center justify-center gap-5">
+                <div class="hidden md:block"> <img src={{ asset('images/wmsu.png') }} alt="Doctor"></div>
+                <div class="text-sm leading-tight">
+                    <p>Western Mindanao State University</p>
+                    <p>College of Home Economics</p>
+                    <p>Department of Nutrition and Dietetics</p>
+                    <p>Online Consultation Clinic</p>
+                </div>
+                <div class="hidden md:block"> <img src={{ asset('images/he.png') }} alt="Doctor"></div>
             </div>
         </div>
+
+        {{-- navigator --}}
+        <div class="sticky top-0 left-0 z-10 flex justify-between w-full px-5 py-5 lg:px-0 navigator">
+            <div class="flex items-center justify-between w-full px-0 lg:px-5 xl:px-10 ">
+                {{-- left --}}
+                <ul class="hidden gap-5 text-lg tracking-wide uppercase lg:flex text-light-black">
+                    <li><a href="#" class="font-semibold text-black">Home</a></li>
+                    <li><a href="#">Consultation</a></li>
+                    <li><a href="#">Instructors</a></li>
+                    <li><a href="#">Tools</a></a></li>
+                    <li><a href="#">FAQ </a></li>
+                    <li><a href="#">About us</a></li>
+                    <li><a href="#">Contact us</a></li>
+                </ul>
+
+                {{-- right --}}
+                <div class="items-center hidden gap-5 lg:flex">
+                    <a href="#" class="text-lg tracking-wide uppercase text-light-black">Login</a>
+                    <x-button>Register</x-button>
+                </div>
+
+                <div class="flex justify-between w-full lg:hidden">
+                    <a href="#" class="text-lg">Home</a>
+                    <div class=""><i class="fa-solid fa-bars"></i></div>
+                </div>
+            </div>
+
+        </div>
+
+        <div
+            class="container flex flex-col-reverse items-center flex-1 w-full gap-5 px-5 mx-auto lg:flex-row lg:justify-between">
+            {{-- Left --}}
+            <div class="self-center mb-10">
+                <h1 class="text-3xl font-bold uppercase lg:text-6xl">Reach your instructor from anywhere</h1>
+                <p class="pt-5 pb-10 lg:w-8/12 text-slate-700">
+                    Get in touch with your instructor anytime, anywhere, to receive prompt guidance and support tailored
+                    to your needs. Whether you have questions, need clarification, or want advice on your progress, your
+                    instructor is available to help you.
+                </p>
+
+                <p
+                    class="px-8 py-4 text-lg font-medium tracking-wider text-white uppercase bg-green-800 border rounded-md w-fit">
+                    Book Now
+                </p>
+            </div>
+
+            {{-- Right --}}
+            <div class="relative flex justify-end w-5/5 lg:w-4/5 lg:items-end lg:self-end image-container">
+                <img src="{{ asset('images/doctor.png') }}" class="w-full " alt="Doctor">
+                <div class="absolute px-5 py-2 bg-white shadow-md floating-info rounded-3xl ">
+                    <div class="flex items-center gap-2">
+                        <i class="text-red-500 fa-solid fa-heart"></i>
+                        <p class="text-slate-700">{{ "5" }} patients assisted.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </header>
 
     {{-- Statistics --}}
@@ -58,12 +106,10 @@
     </div>
 
     {{-- Steps --}}
-    <div class="py-28">
+    <div class="py-28 lg:py-40">
         <div class="container px-5 mx-auto ">
             {{-- header --}}
-            <div class="pb-16 text-center ">
-                <h2 class="text-2xl font-medium capitalize">Quick solution for scheduling with instructor</h2>
-            </div>
+            <x-section-header heading="Quick solution for scheduling with instructor" />
 
             {{--  --}}
             <div class="flex justify-center">
@@ -74,11 +120,11 @@
 
                     <x-steps-box title="Consult"
                         description="Engage in an in-depth consultation where your consultant will listen, understand, and address your concerns. This dedicated time helps provide solutions and guidance to meet your goals effectively."
-                        emoji="fa-comments" color="blue" />
+                        emoji="fa-comments" color="green" />
 
                     <x-steps-box title="Monitor"
                         description="Stay on track by monitoring your progress. Follow up regularly to ensure that your goals are being met and to make adjustments for ongoing improvement and success."
-                        emoji="fa-chart-area" color="red" />
+                        emoji="fa-chart-area" color="green" />
                 </div>
             </div>
         </div>
@@ -86,7 +132,7 @@
 
     {{-- BMI Tool --}}
     <div class="flex items-center justify-center min-h-screen bmi-tool">
-        <div class="container flex items-center justify-center px-5 mx-auto">
+        <div class="container flex items-center justify-center px-5 py-20 mx-auto">
             {{-- form --}}
             <form action="" class="w-full px-5 py-10 text-center bg-white border rounded-md max-w-96">
                 <h2 class="mt-5 mb-10 text-2xl font-medium uppercase">Body mass index</h2>
@@ -120,12 +166,14 @@
             <div class="flex justify-center">
                 <div class="grid gap-5 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                     {{-- box --}}
-                    <x-instructor-card image="{{ asset('images/doctor.png') }}" name="Gregory Yames" />
-                    <x-instructor-card image="{{ asset('images/doctor.png') }}" name="Gregory Yames" />
-                    <x-instructor-card image="{{ asset('images/doctor.png') }}" name="Gregory Yames" />
-                    <x-instructor-card image="{{ asset('images/doctor.png') }}" name="Gregory Yames" />
-                    <x-instructor-card image="{{ asset('images/doctor.png') }}" name="Gregory Yames" />
-                    <x-instructor-card image="{{ asset('images/doctor.png') }}" name="Gregory Yames" />
+                    <x-instructor-card image="{{ asset('images/doctor.png') }}" name="Gregory Yames" patients="10" />
+                    <x-instructor-card image="{{ asset('images/doctor.png') }}" name="Gregory Yames" patients="6" />
+                    <x-instructor-card image="{{ asset('images/doctor.png') }}" name="Gregory Yames" patients="2" />
+                    <x-instructor-card image="{{ asset('images/doctor.png') }}" name="Gregory Yames" patients="8" />
+                    <x-instructor-card image="{{ asset('images/doctor.png') }}" name="Gregory Yames"
+                        patients="21" />
+                    <x-instructor-card image="{{ asset('images/doctor.png') }}" name="Gregory Yames"
+                        patients="2" />
                 </div>
             </div>
         </div>
