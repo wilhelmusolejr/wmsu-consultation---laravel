@@ -10,12 +10,14 @@ modals.forEach((modal) => {
     });
 });
 
-loginBtn.addEventListener("click", function () {
+loginBtn.addEventListener("click", function (e) {
+    e.preventDefault();
     let modal = document.querySelector(".modal-login");
     modal.classList.toggle("hidden");
 });
 
-registerBtn.addEventListener("click", function () {
+registerBtn.addEventListener("click", function (e) {
+    e.preventDefault();
     let modal = document.querySelector(".modal-register");
     modal.classList.toggle("hidden");
 });

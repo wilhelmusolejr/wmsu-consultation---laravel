@@ -53,3 +53,8 @@ img {
     max-height: 75vh;
     overflow: auto;
 }
+
+.consultation {
+    background: linear-gradient(rgba(0, 25, 0, 0.8), rgba(0, 25, 0, 0.8)),
+        url("../images/consultation_bg.png") no-repeat center center / cover;
+}

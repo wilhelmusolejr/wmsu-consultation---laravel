@@ -23,47 +23,12 @@
     <header class="relative flex flex-col min-h-screen home-header">
 
         {{-- banner --}}
-        <div class="w-full py-5 text-center bg-green-800 lg:block text-light-white">
-            <div class="flex items-center justify-center gap-5">
-                <div class="hidden md:block"> <img src={{ asset('images/wmsu.png') }} alt="Doctor"></div>
-                <div class="text-sm leading-tight">
-                    <p>Western Mindanao State University</p>
-                    <p>College of Home Economics</p>
-                    <p>Department of Nutrition and Dietetics</p>
-                    <p>Online Consultation Clinic</p>
-                </div>
-                <div class="hidden md:block"> <img src={{ asset('images/he.png') }} alt="Doctor"></div>
-            </div>
-        </div>
+        <x-page-banner />
 
         {{-- navigator --}}
-        <div class="sticky top-0 left-0 z-10 flex justify-between w-full px-5 py-5 lg:px-0 navigator">
-            <div class="flex items-center justify-between w-full px-0 lg:px-5 xl:px-10 ">
-                {{-- left --}}
-                <ul class="hidden gap-5 text-lg tracking-wide uppercase lg:flex text-light-black">
-                    <li><a href="#" class="font-semibold text-black">Home</a></li>
-                    <li><a href="#">Consultation</a></li>
-                    <li><a href="#">Instructors</a></li>
-                    <li><a href="#">Tools</a></a></li>
-                    <li><a href="#">FAQ </a></li>
-                    <li><a href="#">About us</a></li>
-                    <li><a href="#">Contact us</a></li>
-                </ul>
+        <x-navigator />
 
-                {{-- right --}}
-                <div class="items-center hidden gap-5 lg:flex">
-                    <a href="#" class="text-lg tracking-wide uppercase text-light-black login-btn">Login</a>
-                    <x-button class="register-btn">Register</x-button>
-                </div>
-
-                <div class="flex justify-between w-full lg:hidden">
-                    <a href="#" class="text-lg">Home</a>
-                    <div class=""><i class="fa-solid fa-bars"></i></div>
-                </div>
-            </div>
-
-        </div>
-
+        {{-- header content --}}
         <div
             class="container flex flex-col-reverse items-center flex-1 w-full gap-5 px-5 mx-auto lg:flex-row lg:justify-between">
             {{-- Left --}}
@@ -168,85 +133,14 @@
                     {{-- box --}}
                     <x-instructor-card image="{{ asset('images/doctor.png') }}" name="Gregory Yames" patients="10" />
                     <x-instructor-card image="{{ asset('images/doctor.png') }}" name="Gregory Yames" patients="6" />
-                    <x-instructor-card image="{{ asset('images/doctor.png') }}" name="Gregory Yames"
-                        patients="2" />
-                    <x-instructor-card image="{{ asset('images/doctor.png') }}" name="Gregory Yames"
-                        patients="8" />
-                    <x-instructor-card image="{{ asset('images/doctor.png') }}" name="Gregory Yames"
-                        patients="21" />
-                    <x-instructor-card image="{{ asset('images/doctor.png') }}" name="Gregory Yames"
-                        patients="2" />
+                    <x-instructor-card image="{{ asset('images/doctor.png') }}" name="Gregory Yames" patients="2" />
+                    <x-instructor-card image="{{ asset('images/doctor.png') }}" name="Gregory Yames" patients="8" />
+                    <x-instructor-card image="{{ asset('images/doctor.png') }}" name="Gregory Yames" patients="21" />
+                    <x-instructor-card image="{{ asset('images/doctor.png') }}" name="Gregory Yames" patients="2" />
                 </div>
             </div>
         </div>
     </div>
-
-    {{-- LOGIN MODAL --}}
-    <x-modal class="modal-login">
-        <div class="modal-header">
-            <h2 class="pb-5 mb-10 text-3xl font-semibold tracking-wider text-center uppercase border-b-2 border-black">Login</h2>
-        </div>
-
-        <div class="modal-body">
-            <form action="">
-                <div class="flex flex-col gap-1 mb-5">
-                    <label for="email">Email</label>
-                    <input type="email" name="email" id="email" class="rounded-md">
-                </div>
-                <div class="flex flex-col gap-1 mb-5">
-                    <label for="password">Password</label>
-                    <input type="password" name="password" id="password" class="rounded-md">
-                </div>
-
-                <div class="flex items-center justify-center">
-                    <x-button>Login</x-button>
-                </div>
-            </form>
-        </div>
-
-        <div class="mt-10"><a href="#" >Register</a></div>
-    </x-modal>
-
-    {{-- REGISTER MODAL --}}
-    <x-modal class="modal-register" >
-        <div class="modal-header">
-            <h2 class="pb-5 mb-10 text-3xl font-semibold tracking-wider text-center uppercase border-b-2 border-black">Register</h2>
-        </div>
-
-        <div class="modal-body">
-            <form action="">
-                {{-- first name --}}
-                <div class="flex flex-col gap-1 mb-5">
-                    <label for="first_name">First name</label>
-                    <input type="text" name="first_name" id="first_name" class="rounded-md">
-                </div>
-
-                {{-- last name --}}
-                <div class="flex flex-col gap-1 mb-5">
-                    <label for="email">Last name</label>
-                    <input type="text" name="last_name" id="last_name" class="rounded-md">
-                </div>
-
-                {{-- email --}}
-                <div class="flex flex-col gap-1 mb-5">
-                    <label for="email">Email</label>
-                    <input type="email" name="email" id="email" class="rounded-md">
-                </div>
-
-                {{-- password --}}
-                <div class="flex flex-col gap-1 mb-5">
-                    <label for="password">password</label>
-                    <input type="password" name="password" id="password" class="rounded-md">
-                </div>
-
-                <div class="flex items-center justify-center">
-                    <x-button>Register</x-button>
-                </div>
-            </form>
-        </div>
-
-        <div class="mt-10"><a href="#" >Register</a></div>
-    </x-modal>
 
     <br>
     <br>
