@@ -44,3 +44,12 @@ img {
     top: 50%;
     right: 20px;
 }
+
+.background-modal {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.modal .modal-container {
+    max-height: 75vh;
+    overflow: auto;
+}

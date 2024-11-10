@@ -7,18 +7,18 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 
+    {{-- stylesheet --}}
     @vite('resources/css/app.css')
-
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
+    {{-- font awesome --}}
     <script src="https://kit.fontawesome.com/6b2bcc8033.js" crossorigin="anonymous"></script>
+
+    {{-- script --}}
+    @vite(['resources/js/app.js'])
 </head>
 
 <body>
-
-
-
-
     {{-- header --}}
     <header class="relative flex flex-col min-h-screen home-header">
 
@@ -52,8 +52,8 @@
 
                 {{-- right --}}
                 <div class="items-center hidden gap-5 lg:flex">
-                    <a href="#" class="text-lg tracking-wide uppercase text-light-black">Login</a>
-                    <x-button>Register</x-button>
+                    <a href="#" class="text-lg tracking-wide uppercase text-light-black login-btn">Login</a>
+                    <x-button class="register-btn">Register</x-button>
                 </div>
 
                 <div class="flex justify-between w-full lg:hidden">
@@ -87,7 +87,7 @@
                 <div class="absolute px-5 py-2 bg-white shadow-md floating-info rounded-3xl ">
                     <div class="flex items-center gap-2">
                         <i class="text-red-500 fa-solid fa-heart"></i>
-                        <p class="text-slate-700">{{ "5" }} patients assisted.</p>
+                        <p class="text-slate-700">{{ '5' }} patients assisted.</p>
                     </div>
                 </div>
             </div>
@@ -168,14 +168,79 @@
                     {{-- box --}}
                     <x-instructor-card image="{{ asset('images/doctor.png') }}" name="Gregory Yames" patients="10" />
                     <x-instructor-card image="{{ asset('images/doctor.png') }}" name="Gregory Yames" patients="6" />
-                    <x-instructor-card image="{{ asset('images/doctor.png') }}" name="Gregory Yames" patients="2" />
-                    <x-instructor-card image="{{ asset('images/doctor.png') }}" name="Gregory Yames" patients="8" />
+                    <x-instructor-card image="{{ asset('images/doctor.png') }}" name="Gregory Yames"
+                        patients="2" />
+                    <x-instructor-card image="{{ asset('images/doctor.png') }}" name="Gregory Yames"
+                        patients="8" />
                     <x-instructor-card image="{{ asset('images/doctor.png') }}" name="Gregory Yames"
                         patients="21" />
                     <x-instructor-card image="{{ asset('images/doctor.png') }}" name="Gregory Yames"
                         patients="2" />
                 </div>
             </div>
+        </div>
+    </div>
+
+    {{-- LOGIN MODAL --}}
+    <div class="fixed inset-0 z-20 flex items-center justify-center hidden min-h-screen px-5 text-black modal modal-login background-modal ">
+        <div class="container p-5 pt-10 pb-5 bg-white border rounded-md modal-container max-w-96 ">
+            <h2 class="pb-5 mb-10 text-3xl font-semibold tracking-wider text-center uppercase border-b-2 border-black">Login</h2>
+
+            <form action="">
+                <div class="flex flex-col gap-1 mb-5">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email" class="rounded-md">
+                </div>
+                <div class="flex flex-col gap-1 mb-5">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password" class="rounded-md">
+                </div>
+
+                <div class="flex items-center justify-center">
+                    <x-button>Login</x-button>
+                </div>
+            </form>
+
+            <div class="mt-10"><a href="#" >Register</a></div>
+        </div>
+    </div>
+
+    {{-- REGISTER MODAL --}}
+    <div class="fixed inset-0 z-20 flex items-center justify-center hidden min-h-screen px-5 text-black modal modal-register background-modal ">
+        <div class="container p-5 pt-10 pb-5 bg-white border rounded-md max-w-96 modal-container">
+            <h2 class="pb-5 mb-10 text-3xl font-semibold tracking-wider text-center uppercase border-b-2 border-black">Register</h2>
+
+            <form action="">
+                {{-- first name --}}
+                <div class="flex flex-col gap-1 mb-5">
+                    <label for="first_name">First name</label>
+                    <input type="text" name="first_name" id="first_name" class="rounded-md">
+                </div>
+
+                {{-- last name --}}
+                <div class="flex flex-col gap-1 mb-5">
+                    <label for="email">Last name</label>
+                    <input type="text" name="last_name" id="last_name" class="rounded-md">
+                </div>
+
+                {{-- email --}}
+                <div class="flex flex-col gap-1 mb-5">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email" class="rounded-md">
+                </div>
+
+                {{-- password --}}
+                <div class="flex flex-col gap-1 mb-5">
+                    <label for="password">password</label>
+                    <input type="password" name="password" id="password" class="rounded-md">
+                </div>
+
+                <div class="flex items-center justify-center">
+                    <x-button>Register</x-button>
+                </div>
+            </form>
+
+            <div class="mt-10"><a href="#" >Register</a></div>
         </div>
     </div>
 
@@ -193,70 +258,7 @@
     <br>
 
     {{-- Footer --}}
-    <footer class="py-20 text-white border-t-8 border-green-800 bg-green-950">
-        <div class="container flex flex-col gap-20 px-5 mx-auto lg:flex-row lg:justify-between">
-            {{-- left --}}
-            <div class="flex flex-col items-center justify-between lg:items-start">
-                <h2 class="mb-10 text-3xl font-semibold tracking-wider uppercase lg:mb-5 ">Stay in touch</h2>
-                <div class="flex flex-col gap-5 text-light-white">
-                    {{-- item --}}
-                    <div class="flex flex-row items-center gap-3">
-                        <div class="flex items-center justify-center h-10 bg-white border rounded-md min-w-10">
-                            <i class="text-lg text-black fa-solid fa-phone"></i>
-                        </div>
-                        <p>0997-297-6807</p>
-                    </div>
-                    {{-- item --}}
-                    <div class="flex flex-row items-center gap-3">
-                        <div class="flex items-center justify-center h-10 bg-white border rounded-md min-w-10">
-                            <i class="text-lg text-black fa-solid fa-envelope"></i>
-                        </div>
-                        <p>wmsuchedean@gmail.com</p>
-                    </div>
-                    {{-- item --}}
-                    <div class="flex flex-row items-center gap-3">
-                        <div class="flex items-center justify-center h-10 bg-white border rounded-md min-w-10">
-                            <i class="text-lg text-black fa-brands fa-facebook-f"></i>
-                        </div>
-                        <p>WMSU - College of Home Economics</p>
-                    </div>
-                </div>
-            </div>
-
-            {{-- right --}}
-            <div class="flex flex-col justify-center gap-10 md:flex-row lg:items-start ">
-                {{-- item --}}
-                <div class="">
-                    <h2 class="mb-5 text-3xl font-medium uppercase ">Services</h2>
-                    <ul class="flex flex-col gap-5 text-light-white">
-                        <li><a href="#">Services</a></li>
-                        <li><a href="#">Doctors</a></li>
-                        <li><a href="#">Articles</a></li>
-                    </ul>
-                </div>
-
-                {{-- item --}}
-                <div class="">
-                    <h2 class="mb-5 text-3xl font-medium uppercase ">About</h2>
-                    <ul class="flex flex-col gap-5 text-light-white">
-                        <li><a href="#">Services</a></li>
-                        <li><a href="#">Doctors</a></li>
-                        <li><a href="#">Articles</a></li>
-                    </ul>
-                </div>
-
-                {{-- item --}}
-                <div class="">
-                    <h2 class="mb-5 text-3xl font-medium uppercase ">Legal</h2>
-                    <ul class="flex flex-col gap-5 text-light-white">
-                        <li><a href="#">Services</a></li>
-                        <li><a href="#">Doctors</a></li>
-                        <li><a href="#">Articles</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <x-footer />
 </body>
 
 </html>
