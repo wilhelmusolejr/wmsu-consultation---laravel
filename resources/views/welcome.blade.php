@@ -182,10 +182,12 @@
     </div>
 
     {{-- LOGIN MODAL --}}
-    <div class="fixed inset-0 z-20 flex items-center justify-center hidden min-h-screen px-5 text-black modal modal-login background-modal ">
-        <div class="container p-5 pt-10 pb-5 bg-white border rounded-md modal-container max-w-96 ">
+    <x-modal class="modal-login">
+        <div class="modal-header">
             <h2 class="pb-5 mb-10 text-3xl font-semibold tracking-wider text-center uppercase border-b-2 border-black">Login</h2>
+        </div>
 
+        <div class="modal-body">
             <form action="">
                 <div class="flex flex-col gap-1 mb-5">
                     <label for="email">Email</label>
@@ -200,16 +202,18 @@
                     <x-button>Login</x-button>
                 </div>
             </form>
-
-            <div class="mt-10"><a href="#" >Register</a></div>
         </div>
-    </div>
+
+        <div class="mt-10"><a href="#" >Register</a></div>
+    </x-modal>
 
     {{-- REGISTER MODAL --}}
-    <div class="fixed inset-0 z-20 flex items-center justify-center hidden min-h-screen px-5 text-black modal modal-register background-modal ">
-        <div class="container p-5 pt-10 pb-5 bg-white border rounded-md max-w-96 modal-container">
+    <x-modal class="modal-register" >
+        <div class="modal-header">
             <h2 class="pb-5 mb-10 text-3xl font-semibold tracking-wider text-center uppercase border-b-2 border-black">Register</h2>
+        </div>
 
+        <div class="modal-body">
             <form action="">
                 {{-- first name --}}
                 <div class="flex flex-col gap-1 mb-5">
@@ -239,10 +243,10 @@
                     <x-button>Register</x-button>
                 </div>
             </form>
-
-            <div class="mt-10"><a href="#" >Register</a></div>
         </div>
-    </div>
+
+        <div class="mt-10"><a href="#" >Register</a></div>
+    </x-modal>
 
     <br>
     <br>
