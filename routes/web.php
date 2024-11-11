@@ -11,6 +11,10 @@ Route::get('/consultation', function () {
     return view('consultation');
 })->name('navigator');
 
+Route::get('/consultation/{id}', function ($id) {
+    return view('consultation', compact('id'));
+});
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })
