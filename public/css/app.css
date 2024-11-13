@@ -58,3 +58,17 @@ img {
     background: linear-gradient(rgba(0, 25, 0, 0.8), rgba(0, 25, 0, 0.8)),
         url("../images/consultation_bg.png") no-repeat center center / cover;
 }
+
+input {
+    color: black !important;
+}
+
+.radio-checked {
+    background: #cfdbce;
+    border: 2px solid #53a34c;
+}
+
+.invalid-input {
+    border: 1px solid red;
+    background: #ffcccb;
+}

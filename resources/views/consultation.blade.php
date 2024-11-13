@@ -64,23 +64,25 @@
                     </div>
 
                     {{-- appointment for --}}
-                    <div class="flex flex-wrap items-center gap-5 my-5">
+                    <div class="flex flex-wrap items-center gap-5 my-5 appointment-for">
                         <p>Apoint for</p>
                         <div class="flex flex-wrap gap-5">
                             <div
-                                class="flex items-center justify-center w-full gap-3 px-5 py-4 border rounded-md md:w-40">
-                                <input type="radio" id="myself" name="age" value="30" checked>
-                                <label for="myself">Myself</label><br>
+                                class="flex items-center justify-center w-full gap-3 px-5 py-4 border rounded-md md:w-40 radio-checked appointment-option">
+                                <input type="radio" id="myself" name="appointment-for" value="Myself" checked
+                                    class="cursor-pointer">
+                                <label for="myself" class="cursor-pointer">Myself</label><br>
                             </div>
                             <div
-                                class="flex items-center justify-center w-full gap-3 px-5 py-4 border rounded-md md:w-40">
-                                <input type="radio" id="other" name="age" value="30">
-                                <label for="other">Other</label><br>
+                                class="flex items-center justify-center w-full gap-3 px-5 py-4 border rounded-md md:w-40 appointment-option">
+                                <input type="radio" id="other" name="appointment-for" value="Other"
+                                    class="cursor-pointer">
+                                <label for="other" class="cursor-pointer">Other</label><br>
                             </div>
                         </div>
                     </div>
 
-                    {{-- stage 1 --}}
+                    {{-- Personal Information --}}
                     <div class="flex flex-wrap justify-center w-full gap-10 ">
                         {{-- Personal Information --}}
                         <div class="flex flex-wrap items-start justify-center w-full gap-5 mb-10 ">
@@ -89,50 +91,48 @@
 
                             {{-- firstname --}}
                             <div class="w-full md:w-1/3">
-                                <x-input type="text" name="first_name" label="First name" />
+                                <x-input type="text" name="first_name" label="First name" required />
                             </div>
 
                             {{-- lastname --}}
                             <div class="w-full md:w-1/3">
-                                <x-input type="text" name="last_name" label="Last name" />
+                                <x-input type="text" name="last_name" label="Last name" required />
                             </div>
 
                             {{-- birthdate --}}
                             <div class="w-full md:w-1/3">
-                                <x-input type="date" name="birthdate" label="Birthdate" />
+                                <x-input type="date" name="birthdate" label="Birthdate" required />
                             </div>
 
                             {{-- gender --}}
                             <div class="flex flex-col w-full gap-1 md:w-1/3">
-                                <label for="gender">Gender</label>
-                                <select id="gender" class="rounded-md">
+                                <x-input-option name="consult_gender" label="Gender" required>
                                     <option value="male">male</option>
                                     <option value="female">female</option>
-                                </select>
+                                </x-input-option>
                             </div>
                         </div>
                     </div>
 
-                    {{-- stage 2 --}}
+                    {{-- Contact Information --}}
                     <div class="flex flex-wrap justify-center w-full gap-10 ">
-                        {{-- Personal Information --}}
                         <div class="flex flex-wrap items-start justify-center w-full gap-5 mb-10 ">
                             <h3 class="w-full mt-5 mb-2 text-xl font-medium md:w-1/3">Contact Information</h3>
                             <h3 class="hidden w-1/3 md:block"></h3>
 
                             {{-- phone number --}}
                             <div class="w-full md:w-1/3">
-                                <x-input type="number" name="phone_numer" label="Phone number" />
+                                <x-input type="number" name="phone_numer" label="Phone number" required />
                             </div>
 
                             {{-- email --}}
                             <div class="w-full md:w-1/3">
-                                <x-input type="email" name="email" label="Email" />
+                                <x-input type="email" name="email" label="Email" required />
                             </div>
                         </div>
                     </div>
 
-                    {{-- stage 3 --}}
+                    {{-- Consultation Information --}}
                     <div class="flex flex-wrap justify-center w-full gap-10 ">
                         {{-- Consultation Information --}}
                         <div class="flex flex-wrap items-start justify-center w-full gap-5 mb-10 ">
@@ -141,7 +141,7 @@
 
                             {{-- Complain --}}
                             <div class="w-full md:w-1/3">
-                                <x-input type="text" name="chief_complain" label="Chief Complaint" />
+                                <x-input type="text" name="chief_complain" label="Chief Complaint" required />
                             </div>
 
                             {{-- Referral Form --}}
@@ -151,7 +151,7 @@
 
                             {{-- appointment date --}}
                             <div class="w-full md:w-1/3">
-                                <x-input type="date" name="appointment_date" label="Appointment Date" />
+                                <x-input type="date" name="appointment_date" label="Appointment Date" required />
                             </div>
                             <h3 class="hidden w-1/3 md:block"></h3>
 
@@ -159,159 +159,117 @@
                         </div>
                     </div>
 
-                    {{-- stage 4 --}}
+                    {{-- Health Information --}}
                     <div class="flex flex-wrap justify-center gap-10 ">
-                        {{-- Health Information --}}
                         <div class="flex flex-wrap items-start justify-center gap-5 mb-10 ">
                             <h3 class="w-full mt-5 mb-2 text-xl font-medium md:w-1/3">Health Information</h3>
                             <h3 class="hidden w-1/3 md:block"></h3>
 
                             {{-- Height --}}
                             <div class="w-full md:w-1/3">
-                                <x-input type="text" name="height" label="Height" />
+                                <x-input type="text" name="height" label="Height" required />
                             </div>
 
                             {{-- Weight --}}
                             <div class="w-full md:w-1/3">
-                                <x-input type="text" name="height" label="Weight" />
+                                <x-input type="text" name="height" label="Weight" required />
                             </div>
 
                             {{-- Has your weight changed in the past year? --}}
                             <div class="flex flex-col w-full gap-1 md:w-1/3">
-                                <label for="gender">Has your weight changed in the past year?</label>
-                                <select id="gender" class="rounded-md">
+                                <x-input-option name="consult_weight_changed_past_year"
+                                    label="Has your weight changed in the past year?" required>
                                     <option value="yes">yes</option>
                                     <option value="no">no</option>
-                                </select>
+                                </x-input-option>
                             </div>
 
-                            {{-- Has your weight changed in the past year? --}}
-                            <div class="flex flex-col w-full gap-1 md:w-1/3 ">
-                                <label for="exercise">Do you exercise?</label>
-                                <select id="exercise" class="rounded-md">
+                            {{-- Do you exercise? --}}
+                            <div class="flex flex-col w-full gap-1 md:w-1/3">
+                                <x-input-option name="consult_exercise" label="Do you exercise?" required>
                                     <option value="yes">yes</option>
                                     <option value="no">no</option>
-                                </select>
+                                </x-input-option>
                             </div>
 
                             {{-- Are there any medical reasons why you cannot exercise? --}}
-                            <div class="flex flex-col w-full gap-1 md:w-1/3 ">
-                                <label for="medical_reason">Are there any medical reasons why you cannot
-                                    exercise?</label>
-                                <select id="medical_reason" class="rounded-md">
+                            <div class="flex flex-col w-full gap-1 md:w-1/3">
+                                <x-input-option name="consult_medical_reason"
+                                    label="Are there any medical reasons why you cannot exercise?" required>
                                     <option value="yes">yes</option>
                                     <option value="no">no</option>
-                                </select>
+                                </x-input-option>
                             </div>
 
-                            {{-- Stress level --}}
-                            <div class="flex flex-col w-full gap-1 md:w-1/3 ">
-                                <label for="stress_level">Stress Level</label>
-                                <select id="stress_level" class="rounded-md">
+                            {{-- Stress Level --}}
+                            <div class="flex flex-col w-full gap-1 md:w-1/3">
+                                <x-input-option name="consult_stress_level" label="Stress Level" >
                                     <option value="low">low</option>
                                     <option value="balanced">balanced</option>
                                     <option value="high">high</option>
-                                </select>
+                                </x-input-option>
                             </div>
+
                         </div>
                     </div>
 
-                    {{-- stage 5     --}}
+                    {{-- Nutrition Information --}}
                     <div class="flex flex-wrap justify-center gap-10 ">
-                        {{-- Health Information --}}
                         <div class="flex flex-wrap items-start justify-center gap-5 mb-10 ">
                             <h3 class="w-full mt-5 mb-2 text-xl font-medium md:w-1/3">Nutrional Information</h3>
                             <h3 class="hidden w-1/3 md:block"></h3>
 
-                            {{-- Have you met with a registered dietetican in the past? --}}
+                            {{-- Have you met with a registered dietitian in the past? --}}
                             <div class="flex flex-col w-full gap-1 md:w-1/3">
-                                <label for="meet_past_dietecial">Has your weight changed in the past year?</label>
-                                <select id="meet_past_dietecial" class="rounded-md">
+                                <x-input-option name="consult_meet_past_dietician"
+                                    label="Have you met with a registered dietitian in the past?" required>
                                     <option value="yes">yes</option>
                                     <option value="no">no</option>
-                                </select>
+                                </x-input-option>
                             </div>
 
                             {{-- Do you follow a special diet or eating style --}}
                             <div class="flex flex-col w-full gap-1 md:w-1/3">
-                                <label for="meet_past_dietecial">Do you follow a special diet or eating style?</label>
-                                <select id="meet_past_dietecial" class="rounded-md">
+                                <x-input-option name="consult_special_diet"
+                                    label="Do you follow a special diet or eating style?" required>
                                     <option value="yes">yes</option>
                                     <option value="no">no</option>
-                                </select>
+                                </x-input-option>
                             </div>
 
                             {{-- Food preferences --}}
                             <div class="w-full md:w-1/3">
-                                <x-input type="text" name="food_preference" label="Any food preferences" />
+                                <x-input type="text" name="food_preference" label="Any food preferences" required />
                             </div>
 
                             {{-- Who does your grocery shopping? --}}
                             <div class="flex flex-col w-full gap-1 md:w-1/3">
-                                <label for="who_grocery">Who does your grocery shopping?</label>
-                                <select id="who_grocery" class="rounded-md">
+                                <x-input-option name="consult_who_grocery" label="Who does your grocery shopping?" >
                                     <option value="Myself">Myself</option>
-                                    <option value="others">others</option>
-                                </select>
+                                    <option value="others">Others</option>
+                                </x-input-option>
                             </div>
 
                             {{-- Who prepares your meals? --}}
                             <div class="flex flex-col w-full gap-1 md:w-1/3">
-                                <label for="who_prepare_meal">Who prepares your meals?</label>
-                                <select id="who_prepare_meal" class="rounded-md">
+                                <x-input-option name="consult_who_prepare_meal" label="Who prepares your meals?" >
                                     <option value="Myself">Myself</option>
-                                    <option value="others">others</option>
-                                </select>
+                                    <option value="others">Others</option>
+                                </x-input-option>
                             </div>
 
-                            {{-- Who prepares your meals? --}}
+                            {{-- Do you ever skip meals? --}}
                             <div class="flex flex-col w-full gap-1 md:w-1/3">
-                                <label for="who_prepare_meal">Do you ever skip meals?</label>
-                                <select id="who_prepare_meal" class="rounded-md">
-                                    <option value="yes">yes</option>
-                                    <option value="no">no</option>
-                                </select>
+                                <x-input-option name="consult_skip_meals" label="Do you ever skip meals?">
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
+                                </x-input-option>
                             </div>
 
-                            {{-- Has your weight changed in the past year? --}}
-                            <div class="flex flex-col w-full gap-1 md:w-1/3">
-                                <label for="gender">Has your weight changed in the past year?</label>
-                                <select id="gender" class="rounded-md">
-                                    <option value="yes">yes</option>
-                                    <option value="no">no</option>
-                                </select>
-                            </div>
-
-                            {{-- Has your weight changed in the past year? --}}
-                            <div class="flex flex-col w-full gap-1 md:w-1/3">
-                                <label for="exercise">Do you exercise?</label>
-                                <select id="exercise" class="rounded-md">
-                                    <option value="yes">yes</option>
-                                    <option value="no">no</option>
-                                </select>
-                            </div>
-
-                            {{-- Are there any medical reasons why you cannot exercise? --}}
-                            <div class="flex flex-col w-full gap-1 md:w-1/3">
-                                <label for="medical_reason">Are there any medical reasons why you cannot
-                                    exercise?</label>
-                                <select id="medical_reason" class="rounded-md">
-                                    <option value="yes">yes</option>
-                                    <option value="no">no</option>
-                                </select>
-                            </div>
-
-                            {{-- Stress level --}}
-                            <div class="flex flex-col w-full gap-1 md:w-1/3">
-                                <label for="stress_level">Stress Level</label>
-                                <select id="stress_level" class="rounded-md">
-                                    <option value="low">low</option>
-                                    <option value="balanced">balanced</option>
-                                    <option value="high">high</option>
-                                </select>
-                            </div>
                         </div>
                     </div>
+
+                    {{-- <button type="submit">test</button> --}}
                 </form>
 
                 <div class="flex items-end justify-end mt-10">
@@ -325,7 +283,7 @@
         <div class="px-5 py-32 consultation">
 
             {{-- consultation --}}
-            <div class="container p-5 mx-auto bg-white border rounded-md" data-step="1">
+            <div class="container hidden p-5 mx-auto bg-white border rounded-md" data-step="1">
 
                 <form action="" id="appointmentForm" class="flex flex-col items-center">
                     @csrf <!-- Important for Laravel CSRF protection -->
@@ -360,7 +318,8 @@
 
                             {{-- firstname --}}
                             <div class="w-full md:w-1/3">
-                                <x-input type="text" name="first_name" label="First name" disabled value="test"  />
+                                <x-input type="text" name="first_name" label="First name" disabled
+                                    value="test" />
                             </div>
 
                             {{-- lastname --}}
@@ -592,7 +551,7 @@
             </div>
 
             {{-- appointment details --}}
-            <div class="container hidden p-5 mx-auto bg-white border rounded-md" data-step="2">
+            <div class="container p-5 mx-auto bg-white border rounded-md" data-step="2">
 
                 <div class="my-10 text-center uppercase">
                     <h2 class="text-4xl font-medium">Appointment Details</h2>
@@ -603,35 +562,38 @@
                     <div class="flex flex-wrap justify-center gap-10 lg:w-6/12">
                         {{-- appointment number --}}
                         <div class="w-full md:w-1/3">
-                            <x-input type="text" name="appointment_number" label="Appointment number" />
+                            <x-input type="text" name="appointment_number" label="Appointment number" value="#123" disabled/>
                         </div>
 
                         {{-- appointment number --}}
                         <div class="w-full md:w-1/3">
-                            <x-input type="text" name="appointment_date" label="Appointment date" />
+                            <x-input type="text" name="appointment_date" label="Appointment date" value="11/11/2024" disabled />
                         </div>
 
                         {{-- appointment number --}}
                         <div class="w-full md:w-1/3">
-                            <x-input type="text" name="appointment_status" label="Appointment status" />
+                            <x-input type="text" name="appointment_status" label="Appointment status" value="PENDING" disabled />
                         </div>
 
                         {{-- appointment number --}}
                         <div class="w-full md:w-1/3">
-                            <x-input type="text" name="assigned_instructor" label="Assigned instructor" />
+                            <x-input type="text" name="assigned_instructor" label="Assigned instructor" value="PENDING" disabled  />
                         </div>
                     </div>
 
                     {{-- asigned RND --}}
                     <div class=" max-w-80">
-                        <x-instructor-card image="{{ asset('images/doctor.png') }}" name="Gregory Yames"
+                        <x-instructor-card image="{{ asset('images/doctor.png') }}" name="PENDING"
                             patients="8" />
                     </div>
+
+
                 </div>
 
-                <div class="flex items-end justify-end mt-10">
+                <x-consultation.button-parent class="">
+                    <x-button class="previous-btn">Previous</x-button>
                     <x-button class="next-btn">Next</x-button>
-                </div>
+                </x-consultation.button-parent>
 
             </div>
 
@@ -646,7 +608,7 @@
                     {{-- grid 1 --}}
                     <div class="w-full p-5 border rounded-md md:w-1/2 lg:w-1/4 ">
                         <div class="mb-5"><x-input type="text" name="appointment_number"
-                                label="Appointment number" />
+                                label="Appointment number" value="#123" disabled />
                         </div>
 
                         <div class="border border-black rounded-md bg-gray-50 min-h-60">
@@ -664,13 +626,13 @@
                     </div>
 
                     {{-- grid 2 --}}
-                    <div class="flex-1 p-5 border rounded-md ">
+                    <div class="flex-1 border rounded-md md:p-5 ">
                         <div class="mb-5">
-                            <x-input type="text" name="chief_complain" label="Chief Complaint" />
+                            <x-input type="text" name="chief_complain" label="Chief Complaint" value="tite" disabled />
                         </div>
 
                         {{-- chat --}}
-                        <div class="flex flex-col justify-between gap-5 p-5 bg-green-100 border rounded-md">
+                        <div class="flex flex-col justify-between gap-5 p-5 bg-green-100 border rounded-md ">
                             {{-- chatbox --}}
                             <div class="flex flex-col gap-5 overflow-auto max-h-96 min-h-80">
                                 <div class="self-end w-11/12 p-2 bg-blue-200 border rounded-md md:w-2/3">
@@ -720,11 +682,10 @@
                     </div>
                 </div>
 
-                <div class="flex items-end justify-between mt-10">
-                    <x-button class="appointment-btn">Previous</x-button>
-                    <x-button class="appointment-btn">Continue</x-button>
-                </div>
-
+                <x-consultation.button-parent class="">
+                    <x-button class="previous-btn">Previous</x-button>
+                    <x-button class="next-btn">Next</x-button>
+                </x-consultation.button-parent>
             </div>
 
             {{-- consultation result --}}
@@ -736,37 +697,37 @@
 
                 <div class="flex flex-col items-center justify-center gap-5 lg:flex-row lg:items-start">
                     {{-- grid 1 --}}
-                    <di v class="w-full md:w-1/2 lg:w-1/4 ">
-                        <div class="mb-5">
-                            <x-input type="text" name="appointment_number" label="Appointment number" />
+                    <di v class="flex flex-col w-full gap-5 md:w-1/2 lg:w-1/4 ">
+                        <div class="">
+                            <x-input type="text" name="appointment_number" label="Appointment number" value="#123" disabled/>
                         </div>
-                        <div class="mb-5">
-                            <x-input type="text" name="appointment_number" label="Appointment number" />
+                        <div class="">
+                            <x-input type="text" name="appointment_date_submitted" label="Appointment Date Submitted" value="11/11/2024" disabled/>
                         </div>
-                        <div class="mb-5">
-                            <x-input type="text" name="appointment_number" label="Appointment number" />
+                        <div class="">
+                            <x-input type="text" name="appointment_date_completed" label="Appointment Date Completed" value="11/11/2024" disabled />
                         </div>
                     </di>
 
                     {{-- grid 2 --}}
                     <div class="w-full md:w-1/2 lg:w-1/4 ">
                         <div class="">
-                            <x-input type="text" name="chief_complain" label="Chief Complaint" />
+                            <x-input type="text" name="chief_complain" label="Chief Complaint" value="tite" disabled />
                         </div>
                     </div>
 
                     {{-- grid 3 --}}
                     <div class="w-full lg:w-1/4 md:w-1/2 ">
                         <div class="">
-                            <x-input type="text" name="chief_complain" label="Chief Complaint" />
+                            <x-input type="text" name="consultation_result" label="Consultation Result" value="To be uploaded" disabled />
                         </div>
                     </div>
                 </div>
 
-                <div class="flex flex-wrap items-end justify-around gap-5 mt-10 md:justify-between">
-                    <x-button class="appointment-btn">Previous</x-button>
-                    <x-button class="appointment-btn">Continue</x-button>
-                </div>
+                <x-consultation.button-parent class="">
+                    <x-button class="previous-btn">Previous</x-button>
+                    <x-button class="next-btn">Next</x-button>
+                </x-consultation.button-parent>
 
             </div>
 
@@ -779,22 +740,22 @@
 
                 <div class="flex flex-col items-center justify-center gap-5 lg:flex-row lg:items-start">
                     {{-- grid 1 --}}
-                    <di v class="w-full md:w-1/2 lg:w-1/4 ">
-                        <div class="mb-5">
-                            <x-input type="text" name="appointment_number" label="Appointment number" />
+                    <di v class="flex flex-col w-full gap-5 md:w-1/2 lg:w-1/4 ">
+                        <div class="">
+                            <x-input type="text" name="appointment_number" label="Appointment number" value="#123" disabled/>
                         </div>
-                        <div class="mb-5">
-                            <x-input type="text" name="appointment_number" label="Appointment number" />
+                        <div class="">
+                            <x-input type="text" name="appointment_date_submitted" label="Appointment Date Submitted" value="11/11/2024" disabled/>
                         </div>
-                        <div class="mb-5">
-                            <x-input type="text" name="appointment_number" label="Appointment number" />
+                        <div class="">
+                            <x-input type="text" name="appointment_date_completed" label="Appointment Date Completed" value="11/11/2024" disabled />
                         </div>
                     </di>
 
                     {{-- grid 2 --}}
                     <div class="w-full md:w-1/2 lg:w-1/4 ">
                         <div class="">
-                            <x-input type="text" name="chief_complain" label="Chief Complaint" />
+                            <x-input type="text" name="chief_complain" label="Chief Complaint" value="tite" disabled />
                         </div>
                     </div>
 
@@ -808,10 +769,10 @@
                                 <div class="">
                                     {{-- item --}}
                                     <div class="m-5">
-                                        <x-input type="text" name="chief_complain" label="Chief Complaint" />
+                                        <x-input type="text" name="chief_complain" label="Consultation Result" />
                                     </div>
                                     <div class="m-5">
-                                        <x-input type="text" name="chief_complain" label="Chief Complaint" />
+                                        <x-input type="text" name="chief_complain" label="Conversation Transcript" />
                                     </div>
                                 </div>
                             </div>
@@ -819,10 +780,10 @@
                     </div>
                 </div>
 
-                <div class="flex flex-wrap items-end justify-around gap-5 mt-20 md:justify-between">
-                    <x-button class="appointment-btn">Previous</x-button>
-                    <x-button class="appointment-btn">Continue</x-button>
-                </div>
+                <x-consultation.button-parent class="">
+                    <x-button class="previous-btn">Previous</x-button>
+                    <x-button><a href="/">Home</a></x-button>
+                </x-consultation.button-parent>
             </div>
         </div>
     @endif

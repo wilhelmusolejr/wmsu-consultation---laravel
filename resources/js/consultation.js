@@ -6,12 +6,24 @@ let submitAppointmentModal = document.querySelector(
 );
 let modalCancelBtn = document.querySelectorAll(".modal-close");
 let finalAppointmentBtn = document.getElementById("submitButton");
+let form = document.querySelector("#appointmentForm");
 
 // Show modal when submit btn is pressed
-submitAppointmentBtn.addEventListener("click", function (e) {
+submitAppointmentBtn?.addEventListener("click", function (e) {
     e.preventDefault();
 
-    submitAppointmentModal.classList.remove("hidden");
+    // Loop through each input element in the form
+    Array.from(form.elements).forEach(function (input) {
+        if (!input.checkValidity()) {
+            input.classList.add("invalid-input");
+        } else {
+            input.classList.remove("invalid-input");
+        }
+    });
+
+    if (form.checkValidity()) {
+        submitAppointmentModal.classList.remove("hidden");
+    }
 });
 
 // Hide modal when modal close button is pressed
@@ -26,6 +38,9 @@ submitAppointmentModal.addEventListener("click", function (e) {
 // Consultation Form Submission
 finalAppointmentBtn.addEventListener("click", function (event) {
     event.preventDefault();
+
+    // form.submit();
+    // use ajax instead
 
     finalAppointmentBtn.textContent = "Submitting...";
 
@@ -52,15 +67,20 @@ finalAppointmentBtn.addEventListener("click", function (event) {
     }, 1000);
 });
 
-let currentStep = 1;
+//
+//
+//
+//
+let currentStep = 2;
 
 let consultationParent = document.querySelector(".consultation");
 let progress = document.querySelectorAll(".consultation .container");
 let nextBtn = document.querySelector(".next-btn");
 
-consultationParent.addEventListener("click", function (e) {
-    console.log(e.target);
+let appointmentForOptions = document.querySelectorAll(".appointment-option");
 
+consultationParent.addEventListener("click", function (e) {
+    // Next button
     if (e.target.classList.contains("next-btn")) {
         currentStep += 1;
 
@@ -74,4 +94,34 @@ consultationParent.addEventListener("click", function (e) {
             }
         });
     }
+
+    // Previous button
+    if (e.target.classList.contains("previous-btn")) {
+        currentStep -= 1;
+
+        progress.forEach((progress) => {
+            if (currentStep == progress.getAttribute("data-step")) {
+                progress.classList.remove("hidden");
+            }
+
+            if (currentStep != progress.getAttribute("data-step")) {
+                progress.classList.add("hidden");
+            }
+        });
+    }
+
+    if (e.target.closest(".appointment-option")) {
+        appointmentForOptions.forEach((option) => {
+            if (option.querySelector("input").checked) {
+                option.classList.add("radio-checked");
+            } else {
+                option.classList.remove("radio-checked");
+            }
+        });
+    }
 });
+
+//
+//
+//
+//
