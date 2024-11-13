@@ -27,19 +27,15 @@ const header = document.querySelector("header");
 const navigator = document.querySelector(".navigator");
 const heightWithPadding = navigator.clientHeight;
 
-console.log(heightWithPadding);
-
 // Define a callback function to handle visibility changes
 const handleIntersect = (entries) => {
     entries.forEach((entry) => {
         if (!entry.isIntersecting) {
-            console.log("Header has exited the viewport");
             navigator.classList.remove("sticky");
             navigator.classList.add("fixed");
             navigator.classList.add("bg-white");
             navigator.classList.add("shadow-md");
         } else {
-            console.log("Header is back in view");
             navigator.classList.add("sticky");
             navigator.classList.remove("bg-white");
             navigator.classList.remove("shadow-md");

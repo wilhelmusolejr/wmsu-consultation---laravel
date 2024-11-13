@@ -49,8 +49,6 @@
 
     </header>
 
-
-
     @if (!isset($id))
         {{-- consultation --}}
         <div class="px-5 py-32 consultation">

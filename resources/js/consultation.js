@@ -1,3 +1,4 @@
+const apiUrl = "http://127.0.0.1:8000/api/appointment";
 let countdown = 5;
 
 let submitAppointmentBtn = document.querySelector(".appointment-btn");
@@ -39,32 +40,56 @@ submitAppointmentModal.addEventListener("click", function (e) {
 finalAppointmentBtn.addEventListener("click", function (event) {
     event.preventDefault();
 
-    // form.submit();
-    // use ajax instead
+    const data = {};
+
+    data.appointment_information = {
+        appointment_date: form.querySelector("input[name='appointment_date']")
+            .value,
+        patient_id: 1,
+    };
+
+    console.log(data);
 
     finalAppointmentBtn.textContent = "Submitting...";
 
-    // successs
-    submitAppointmentModal
-        .querySelector(".modal-container")
-        .classList.add("bg-green-100");
-    submitAppointmentModal.querySelector(".modal-header h2").textContent =
-        "Success";
-    submitAppointmentModal.querySelector(
-        ".modal-body .modal-info"
-    ).textContent = "Your appointment has been submitted successfully";
-    finalAppointmentBtn.textContent = "Redirecting in ...";
+    fetch(apiUrl, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    })
+        // Parse JSON response
+        .then((response) => response.json())
+        // successs
+        .then((data) => {
+            console.log(data);
 
-    // Create an interval to update the button text every second
-    let interval = setInterval(() => {
-        finalAppointmentBtn.textContent = `Redirecting in ${countdown}...`;
-        countdown--;
+            submitAppointmentModal
+                .querySelector(".modal-container")
+                .classList.add("bg-green-100");
+            submitAppointmentModal.querySelector(
+                ".modal-header h2"
+            ).textContent = "Success";
+            submitAppointmentModal.querySelector(
+                ".modal-body .modal-info"
+            ).textContent = "Your appointment has been submitted successfully";
+            finalAppointmentBtn.textContent = "Redirecting in ...";
 
-        if (countdown < 0) {
-            clearInterval(interval);
-            window.location.href = "http://127.0.0.1:8000/consultation/5";
-        }
-    }, 1000);
+            // Create an interval to update the button text every second
+            let interval = setInterval(() => {
+                finalAppointmentBtn.textContent = `Redirecting in ${countdown}...`;
+                countdown--;
+
+                if (countdown < 0) {
+                    clearInterval(interval);
+                    window.location.href = `http://127.0.0.1:8000/consultation/${data.id}`;
+                }
+            }, 1000);
+        })
+        .catch((error) => {
+            console.error("Error:", error);
+        });
 });
 
 //
@@ -110,6 +135,7 @@ consultationParent.addEventListener("click", function (e) {
         });
     }
 
+    // appointment for
     if (e.target.closest(".appointment-option")) {
         appointmentForOptions.forEach((option) => {
             if (option.querySelector("input").checked) {
@@ -125,3 +151,42 @@ consultationParent.addEventListener("click", function (e) {
 //
 //
 //
+
+const currentPath = window.location.pathname;
+const pathParts = currentPath.split("/");
+const appointmentId = pathParts[pathParts.length - 1];
+
+if (appointmentId > 0) {
+    let data = {
+        patient_id: 1,
+    };
+
+    let url = `${apiUrl}/${appointmentId}`;
+
+    fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    })
+        // Parse JSON response
+        .then((response) => response.json())
+        // successs
+        .then((data) => {
+            // console.log(data);
+            currentStep = data.step;
+            progress.forEach((progress) => {
+                if (currentStep == progress.getAttribute("data-step")) {
+                    progress.classList.remove("hidden");
+                }
+
+                if (currentStep != progress.getAttribute("data-step")) {
+                    progress.classList.add("hidden");
+                }
+            });
+        })
+        .catch((error) => {
+            console.error("Error:", error);
+        });
+}
