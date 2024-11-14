@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('appointment_id')->constrained('appointments')->onDelete('cascade');
             $table->string("chief_complaint");
-            $table->string("referral_form");
+            $table->string("referral_form") -> nullable();
             $table->timestamps();
         });
     }

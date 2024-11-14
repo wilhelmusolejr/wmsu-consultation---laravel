@@ -24,16 +24,41 @@ class AppointmentController extends Controller
         return response()->json(['message' => 'Appointment not found or patient mismatch'], 404);
     }
 
-    public function store(Request $request)
+    public function store(
+        Request $request,
+        PersonalInformationController $personalInfoController,
+        HealthInformationController $healthInfoController,
+        ContactInformationController $contactInfoController,
+        ConsultationInformationController $consultationInfoController,
+        NutritionInformationController $nutritionInfoController
+        )
     {
+
         $appointment_info = $request->input('appointment_information');
 
         $appointment = Appointment::create([
             'appointment_date' => $appointment_info['appointment_date'],
             'patient_id' => $appointment_info['patient_id'],
+            'dietitian_id' => 'pending',
+            'status' => 'pending',
             'step' => 2,
         ]);
 
-        return response()->json($appointment, 201);
+        $personal_information = $personalInfoController->store($appointment->id, $request->personal_information);
+        $health_information = $healthInfoController->store($appointment->id, $request->health_information);
+        $contact_information = $contactInfoController->store($appointment->id, $request->contact_information);
+        $consultation_information = $consultationInfoController->store($appointment->id, $request->consultation_information);
+        $nutrition_information = $nutritionInfoController->store($appointment->id, $request->nutrition_information);
+
+        $data = [
+            'appointment_information' => $appointment,
+            'personal_information' => $personal_information,
+            'health_information' => $health_information,
+            'contact_information' => $contact_information,
+            'consultation_information' => $consultation_information,
+            'nutrition_information' => $nutrition_information
+        ];
+
+        return response()->json($data, 201);
     }
 }
