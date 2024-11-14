@@ -12,28 +12,26 @@ class AppointmentController extends Controller
         // Get the patient_id from the request (e.g., from logged-in user or API token)
         $patient_id = $request->input('patient_id');
 
-        // Find the appointment by its ID
-        $appointment = Appointment::find($id);
+        // Find the appointment by its ID, including related data
+        $appointment = Appointment::with([
+            'personalInformation',
+            'contactInformation',
+            'consultationInformation',
+            'healthInformation',
+            'nutritionInformation'
+        ])->find($id);
 
         // Check if the appointment exists and if the patient_id matches
         if ($appointment && $appointment->patient_id == $patient_id) {
-            return response()->json($appointment, 200); // Success
+            return response()->json($appointment, 200); // Success with related data
         }
 
         // If not found or patient_id does not match, return an error
         return response()->json(['message' => 'Appointment not found or patient mismatch'], 404);
     }
 
-    public function store(
-        Request $request,
-        PersonalInformationController $personalInfoController,
-        HealthInformationController $healthInfoController,
-        ContactInformationController $contactInfoController,
-        ConsultationInformationController $consultationInfoController,
-        NutritionInformationController $nutritionInfoController
-        )
+    public function store(Request $request, PersonalInformationController $personalInfoController, HealthInformationController $healthInfoController, ContactInformationController $contactInfoController, ConsultationInformationController $consultationInfoController, NutritionInformationController $nutritionInfoController)
     {
-
         $appointment_info = $request->input('appointment_information');
 
         $appointment = Appointment::create([
@@ -56,7 +54,7 @@ class AppointmentController extends Controller
             'health_information' => $health_information,
             'contact_information' => $contact_information,
             'consultation_information' => $consultation_information,
-            'nutrition_information' => $nutrition_information
+            'nutrition_information' => $nutrition_information,
         ];
 
         return response()->json($data, 201);

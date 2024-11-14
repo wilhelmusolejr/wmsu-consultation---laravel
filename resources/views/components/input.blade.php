@@ -7,6 +7,6 @@
         class="rounded-md {{ $disabled ?? false ? 'bg-gray-100' : '' }}"
         {{ $disabled ?? false ? 'disabled' : '' }}
         value="{{ $value ?? '' }}"
-        {{ $required ?? false? "requireds" : "" }}
+        {{ $required ?? false? "required" : "" }}
     >
 </div>

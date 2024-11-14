@@ -1,7 +1,10 @@
 const apiUrl = "http://127.0.0.1:8000/api/appointment";
+
+// VARIABLES
 let countdown = 1;
 let currentStep = 2;
 
+// DATA
 let SUPER_DATA = {
     appointment_id: 1,
     appointment_date: "LOADING",
@@ -50,11 +53,21 @@ let modalCancelBtn = document.querySelectorAll(".modal-close");
 let finalAppointmentBtn = document.getElementById("submitButton");
 let form = document.querySelector("#appointmentForm");
 
+let consultationParent = document.querySelector(".consultation");
+let progress = document.querySelectorAll(".consultation .container");
+let nextBtn = document.querySelector(".next-btn");
+let appointmentForOptions = document.querySelectorAll(".appointment-option");
+
+// web path
+const currentPath = window.location.pathname;
+const pathParts = currentPath.split("/");
+const appointmentId = pathParts[pathParts.length - 1];
+
 // Show modal when submit btn is pressed
 submitAppointmentBtn?.addEventListener("click", function (e) {
     e.preventDefault();
 
-    // Loop through each input element in the form
+    // when input is invalid
     Array.from(form.elements).forEach(function (input) {
         if (!input.checkValidity()) {
             input.classList.add("invalid-input");
@@ -89,34 +102,48 @@ finalAppointmentBtn.addEventListener("click", function (event) {
         patient_id: 1,
     };
     data.personal_information = {
-        first_name: "John",
-        last_name: "Doe",
-        birthdate: "1990-01-01",
-        gender: "male",
+        first_name: form.querySelector("input[name='first_name']").value,
+        last_name: form.querySelector("input[name='last_name']").value,
+        birthdate: form.querySelector("input[name='birthdate']").value,
+        gender: form.querySelector("select[name='consult_gender']").value,
     };
     data.contact_information = {
-        phone_number: "123-456-7890",
-        email: "johndoe@example.com",
+        phone_number: form.querySelector("input[name='phone_numer']").value,
+        email: form.querySelector("input[name='email']").value,
     };
     data.consultation_information = {
-        chief_complaint: "Persistent headache",
+        chief_complaint: form.querySelector("input[name='chief_complain']")
+            .value,
         referral_form: form.querySelector("input[name='referral_form']").value,
     };
     data.health_information = {
-        height: "175 cm",
-        weight: "70 kg",
-        weight_changed_past_year: true,
-        exercise: false,
-        medical_reason: true,
-        stress_level: "high",
+        height: form.querySelector("input[name='height']").value,
+        weight: form.querySelector("input[name='weight']").value,
+        weight_changed_past_year: form.querySelector(
+            "select[name='consult_weight_changed_past_year']"
+        ).value,
+        exercise: form.querySelector("select[name='consult_exercise']").value,
+        medical_reason: form.querySelector(
+            "select[name='consult_medical_reason']"
+        ).value,
+        stress_level: form.querySelector("select[name='consult_stress_level']")
+            .value,
     };
     data.nutrition_information = {
-        meet_past_dietitian: true,
-        special_diet: true,
-        food_preference: "Vegetarian",
-        who_grocery: "Myself",
-        who_prepare_meal: "Myself",
-        skip_meals: false,
+        meet_past_dietitian: form.querySelector(
+            "select[name='consult_meet_past_dietician']"
+        ).value,
+        special_diet: form.querySelector("select[name='consult_special_diet']")
+            .value,
+        food_preference: form.querySelector("input[name='food_preference']")
+            .value,
+        who_grocery: form.querySelector("select[name='consult_who_grocery']")
+            .value,
+        who_prepare_meal: form.querySelector(
+            "select[name='consult_who_prepare_meal']"
+        ).value,
+        skip_meals: form.querySelector("select[name='consult_skip_meals']")
+            .value,
     };
 
     finalAppointmentBtn.textContent = "Submitting...";
@@ -132,52 +159,14 @@ finalAppointmentBtn.addEventListener("click", function (event) {
         .then((response) => response.json())
         // successs
         .then((data) => {
-            console.log(data);
-
             currentStep = data.appointment_information.step;
 
-            let appointment_info = data.appointment_information;
-            let personal_info = data.personal_information;
-
-            SUPER_DATA = {
-                appointment_id: 1,
-                appointment_date: "2024-11-15",
-                appointment_status: "Pending",
-                appointment_information: {
-                    appointment_date: "2024-11-15",
-                    appointment_status: "Pending",
-                },
-                personal_information: {
-                    first_name: "John",
-                    last_name: "Doe",
-                    birthdate: "1990-01-01",
-                    gender: "male",
-                },
-                contact_information: {
-                    phone_number: "1234567890",
-                    email: "johndoe@example.com",
-                },
-                consultation_information: {
-                    chief_complaint: "Persistent headaches",
-                    referral_form: null,
-                },
-                health_information: {
-                    height: "1",
-                    weight: "70kg",
-                    weight_changed_past_year: "yes",
-                    exercise: "yes",
-                    medical_reason: "yes",
-                    stress_level: "balanced",
-                },
-                nutrition_information: {
-                    meet_past_dietitian: "yes",
-                    special_diet: "yes",
-                    food_preference: "no preference",
-                    who_grocery: "Myself",
-                    who_prepare_meal: "Myself",
-                    skip_meals: "yes",
-                },
-            };
+            SUPER_DATA.appointment_information = data.appointment_information;
+            SUPER_DATA.personal_information = data.personal_information;
+            SUPER_DATA.contact_information = data.contact_information;
+            SUPER_DATA.consultation_information = data.consultation_information;
+            SUPER_DATA.health_information = data.health_information;
+            SUPER_DATA.nutrition_information = data.nutrition_information;
 
             // add green bg
             submitAppointmentModal
@@ -212,10 +201,7 @@ finalAppointmentBtn.addEventListener("click", function (event) {
 
                     // hide current modal
                     submitAppointmentModal.classList.add("hidden");
-
                     change_step(currentStep, progress, SUPER_DATA);
-
-                    // window.location.href = `http://127.0.0.1:8000/consultation/${data.id}`;
                 }
             }, 1000);
         })
@@ -228,13 +214,7 @@ finalAppointmentBtn.addEventListener("click", function (event) {
 //
 //
 //
-
-let consultationParent = document.querySelector(".consultation");
-let progress = document.querySelectorAll(".consultation .container");
-let nextBtn = document.querySelector(".next-btn");
-
-let appointmentForOptions = document.querySelectorAll(".appointment-option");
-
+// NEXT AND PREV BUTTON
 consultationParent.addEventListener("click", function (e) {
     // Next button
     if (e.target.classList.contains("next-btn")) {
@@ -267,10 +247,8 @@ consultationParent.addEventListener("click", function (e) {
 //
 //
 
-const currentPath = window.location.pathname;
-const pathParts = currentPath.split("/");
-const appointmentId = pathParts[pathParts.length - 1];
-
+// FOR SEARCH FUNCTION
+// FOR SEARCH FUNCTION
 // FOR SEARCH FUNCTION
 if (appointmentId > 0) {
     let data = {
@@ -292,45 +270,24 @@ if (appointmentId > 0) {
         .then((data) => {
             currentStep = data.step;
 
-            SUPER_DATA = {
-                appointment_id: 1,
-                appointment_date: "2024-11-15",
-                appointment_status: "Pending",
-                appointment_information: {
-                    appointment_date: "2024-11-15",
-                    appointment_status: "Pending",
-                },
-                personal_information: {
-                    first_name: "John",
-                    last_name: "Doe",
-                    birthdate: "1990-01-01",
-                    gender: "male",
-                },
-                contact_information: {
-                    phone_number: "1234567890",
-                    email: "johndoe@example.com",
-                },
-                consultation_information: {
-                    chief_complaint: "Persistent headaches",
-                    referral_form: null,
-                },
-                health_information: {
-                    height: "1",
-                    weight: "70kg",
-                    weight_changed_past_year: "yes",
-                    exercise: "yes",
-                    medical_reason: "yes",
-                    stress_level: "balanced",
-                },
-                nutrition_information: {
-                    meet_past_dietitian: "yes",
-                    special_diet: "yes",
-                    food_preference: "no preference",
-                    who_grocery: "Myself",
-                    who_prepare_meal: "Myself",
-                    skip_meals: "yes",
-                },
+            SUPER_DATA.personal_information = data.personal_information;
+            SUPER_DATA.contact_information = data.contact_information;
+            SUPER_DATA.consultation_information = data.consultation_information;
+            SUPER_DATA.health_information = data.health_information;
+            SUPER_DATA.nutrition_information = data.nutrition_information;
+
+            SUPER_DATA.appointment_information = {
+                appointment_id: data.id,
+                appointment_date: new Date(data.appointment_date)
+                    .toISOString()
+                    .split("T")[0],
+                appointment_status: data.status,
             };
+            SUPER_DATA.personal_information.birthdate = new Date(
+                data.personal_information.birthdate
+            )
+                .toISOString()
+                .split("T")[0];
 
             change_step(currentStep, progress, SUPER_DATA);
         })
@@ -343,17 +300,17 @@ function step_two(progress, data) {
     // appointment number
     progress.querySelector(
         "input[name='appointment_number']"
-    ).value = `#${data.appointment_id}`;
+    ).value = `#${data.appointment_information.appointment_id}`;
 
     // appointment status
     progress.querySelector(
         "input[name='appointment_status']"
-    ).value = `${data.appointment_status.toUpperCase()}`;
+    ).value = `${data.appointment_information.appointment_status.toUpperCase()}`;
 
     // appointment date
     progress.querySelector(
         "input[name='appointment_date']"
-    ).value = `${data.appointment_date}`;
+    ).value = `${data.appointment_information.appointment_date}`;
 
     // submitAppointmentBtn.classList.add("hidden");
     progress.querySelector(".doctor-container img").src =
@@ -491,12 +448,10 @@ function change_step(currentStep, progress, data) {
             progress.classList.remove("hidden");
 
             if (currentStep == 1) {
-                console.log("trigger", currentStep);
                 step_one(progress, data);
             }
 
             if (currentStep == 2) {
-                console.log("trigger", currentStep);
                 step_two(progress, data);
             }
         }
