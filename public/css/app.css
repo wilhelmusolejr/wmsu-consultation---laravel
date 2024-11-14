@@ -72,3 +72,7 @@ input {
     border: 1px solid red;
     background: #ffcccb;
 }
+
+.disabled-input {
+    background: #efefef;
+}

@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('nutrition_information', function (Blueprint $table) {
             $table->id();
             $table->foreignId('appointment_id')->constrained('appointments')->onDelete('cascade'); // Links to appointment
-            $table->boolean('meet_past_dietitian')->nullable(); // Yes/No for meeting a registered dietitian
-            $table->boolean('special_diet')->nullable(); // Yes/No for following a special diet
+            $table->string('meet_past_dietitian')->nullable(); // Yes/No for meeting a registered dietitian
+            $table->string('special_diet')->nullable(); // Yes/No for following a special diet
             $table->string('food_preference')->nullable(); // Any food preferences
             $table->enum('who_grocery', ['Myself', 'Others'])->nullable(); // Who does the grocery shopping
             $table->enum('who_prepare_meal', ['Myself', 'Others'])->nullable(); // Who prepares meals
-            $table->boolean('skip_meals')->nullable(); // Yes/No for skipping meals
+            $table->string('skip_meals')->nullable(); // Yes/No for skipping meals
             $table->timestamps();
         });
     }

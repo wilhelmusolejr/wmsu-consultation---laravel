@@ -16,9 +16,9 @@ return new class extends Migration
             $table->foreignId('appointment_id')->constrained('appointments')->onDelete('cascade'); // Links to appointment
             $table->string('height')->nullable(); // Height input, nullable if not required
             $table->string('weight')->nullable(); // Weight input, nullable if not required
-            $table->boolean('weight_changed_past_year')->nullable(); // Yes/No for weight change
-            $table->boolean('exercise')->nullable(); // Yes/No for exercise
-            $table->boolean('medical_reason_no_exercise')->nullable(); // Yes/No for medical reason to not exercise
+            $table->string('weight_changed_past_year')->nullable(); // Yes/No for weight change
+            $table->string('exercise')->nullable(); // Yes/No for exercise
+            $table->string('medical_reason_no_exercise')->nullable(); // Yes/No for medical reason to not exercise
             $table->enum('stress_level', ['low', 'balanced', 'high'])->nullable(); // Stress level options
             $table->timestamps();
         });
