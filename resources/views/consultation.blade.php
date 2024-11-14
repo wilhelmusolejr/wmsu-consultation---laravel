@@ -365,43 +365,20 @@
                     {{-- chat --}}
                     <div class="flex flex-col justify-between gap-5 p-5 bg-green-100 border rounded-md ">
                         {{-- chatbox --}}
-                        <div class="flex flex-col gap-5 overflow-auto max-h-96 min-h-80">
-                            <div class="self-end w-11/12 p-2 bg-blue-200 border rounded-md md:w-2/3">
+                        <div class="flex flex-col gap-5 overflow-auto max-h-96 min-h-80 chat-box">
+                            <div class="flex items-center justify-center flex-1 h-full p-5 bg-blue-300 rounded-md">
                                 <p>
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum, ratione!
+                                    LOADING
                                 </p>
-                            </div>
-                            <div class="self-start w-11/12 p-2 bg-gray-200 border rounded-md md:w-2/3">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur ducimus
-                                    incidunt ut minima consequuntur fugiat!</p>
-                            </div>
-                            <div class="self-start w-11/12 p-2 bg-gray-200 border rounded-md md:w-2/3">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur ducimus
-                                    incidunt ut minima consequuntur fugiat!</p>
-                            </div>
-                            <div class="self-start w-11/12 p-2 bg-gray-200 border rounded-md md:w-2/3">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur ducimus
-                                    incidunt ut minima consequuntur fugiat!</p>
-                            </div>
-                            <div class="self-start w-11/12 p-2 bg-gray-200 border rounded-md md:w-2/3">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur ducimus
-                                    incidunt ut minima consequuntur fugiat!</p>
-                            </div>
-                            <div class="self-start w-11/12 p-2 bg-gray-200 border rounded-md md:w-2/3">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur ducimus
-                                    incidunt ut minima consequuntur fugiat!</p>
-                            </div>
-                            <div class="self-start w-11/12 p-2 bg-gray-200 border rounded-md md:w-2/3">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur ducimus
-                                    incidunt ut minima consequuntur fugiat!</p>
                             </div>
                         </div>
 
                         <div class="">
-                            <div class="flex flex-wrap gap-2">
-                                <input type="text" class="flex-1 rounded-md">
+                            <form class="flex flex-col gap-2 lg:flex-row" id="chatForm">
+                                @csrf
+                                <input type="text" class="flex-1 rounded-md" name="message_content">
                                 <x-button id="send_message" class="w-full lg:w-fit">Send</x-button>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
