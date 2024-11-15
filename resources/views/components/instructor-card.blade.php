@@ -9,6 +9,6 @@
         </div>
     </div>
     <div class="pb-2 text-center pt-7">
-        <h3 class="font-medium lg:text-xl">Rnd. {{ $name }}</h3>
+        <h3 class="font-medium lg:text-xl name">Rnd. {{ $name }}</h3>
     </div>
 </div>

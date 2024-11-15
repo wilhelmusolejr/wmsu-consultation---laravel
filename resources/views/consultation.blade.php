@@ -320,7 +320,8 @@
 
             <x-consultation.button-parent class="justify-between">
                 <x-button class="previous-btn">Previous</x-button>
-                <x-button class="next-btn">Next</x-button>
+                <x-button class="hidden next-btn">Next</x-button>
+                <x-button class="bg-gray-500 cursor-not-allowed disabled-btn">Next</x-button>
             </x-consultation.button-parent>
 
         </div>
@@ -364,7 +365,11 @@
                     <div class="flex flex-col justify-between gap-5 p-5 bg-green-100 border rounded-md ">
                         {{-- chatbox --}}
                         <div class="flex flex-col gap-5 overflow-auto max-h-96 min-h-80 chat-box">
-                            <div class="flex items-center justify-center flex-1 h-full p-5 bg-blue-300 rounded-md">
+
+
+
+
+                            <div class="items-center justify-center flex-1 flex h-full p-5 bg-blue-300 rounded-md ">
                                 <p>
                                     LOADING
                                 </p>
@@ -376,13 +381,14 @@
                                 @csrf
                                 <input type="text" class="flex-1 rounded-md" name="message_content">
                                 <x-button id="send_message" class="w-full lg:w-fit">Send</x-button>
+                                <x-button class="w-full bg-gray-500 sms-disable-btn lg:w-fit">Send</x-button>
                             </form>
                         </div>
                     </div>
                 </div>
 
                 {{-- grid 3 --}}
-                <div class="w-full lg:w-1/4 md:w-1/2 ">
+                <div class="w-full doctor-container lg:w-1/4 md:w-1/2 ">
                     <x-instructor-card image="{{ asset('images/doctor.png') }}" name="Gregory Yames"
                         patients="8" />
                 </div>
@@ -390,7 +396,8 @@
 
             <x-consultation.button-parent class="justify-between">
                 <x-button class="previous-btn">Previous</x-button>
-                <x-button class="next-btn">Next</x-button>
+                <x-button class="hidden next-btn">Next</x-button>
+                <x-button class="bg-gray-500 cursor-not-allowed disabled-btn">Next</x-button>
             </x-consultation.button-parent>
         </div>
 
@@ -437,7 +444,8 @@
 
             <x-consultation.button-parent class="justify-between">
                 <x-button class="previous-btn">Previous</x-button>
-                <x-button class="next-btn">Next</x-button>
+                <x-button class="hidden next-btn">Next</x-button>
+                <x-button class="bg-gray-500 cursor-not-allowed disabled-btn">Next</x-button>
             </x-consultation.button-parent>
 
         </div>

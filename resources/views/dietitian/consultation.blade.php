@@ -105,6 +105,7 @@
                                 @csrf
                                 <input type="text" class="flex-1 rounded-md" name="message_content">
                                 <x-button id="send_message" class="w-full lg:w-fit">Send</x-button>
+                                <x-button class="w-full bg-gray-500 sms-disable-btn lg:w-fit">Send</x-button>
                             </form>
                         </div>
                     </div>
@@ -117,8 +118,7 @@
             </div>
 
             <x-consultation.button-parent class="flex items-end justify-between mt-10">
-                <div class=""></div>
-                <x-button class="client-information-btn">Client Information</x-button>
+                <x-button class="bg-purple-800 client-information-btn">Client Information</x-button>
                 <x-button class="end-monitoring-btn">End monitoring</x-button>
                 <x-button class="hidden next-btn">next</x-button>
             </x-consultation.button-parent>

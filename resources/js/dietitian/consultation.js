@@ -4,7 +4,7 @@ const apiUrl = "http://127.0.0.1:8000/api/appointment";
 let countdown = 1;
 let currentStep = 2;
 let currentUser = "patient";
-let currentId = 1;
+let currentId = 2;
 
 // DATA
 let SUPER_DATA = {
@@ -15,6 +15,12 @@ let SUPER_DATA = {
         appointment_date: "LOADING",
         appointment_status: "LOADING",
         appointment_id: "LOADING",
+    },
+    dietitian_information: {
+        first_name: "LOADING",
+        last_name: "LOADING",
+        image: "LOADING",
+        id: "LOADING",
     },
     personal_information: {
         first_name: "LOADING",
@@ -56,10 +62,10 @@ sendMessageBtn.addEventListener("click", function (e) {
     let messageInput = chatForm.querySelector("input[name='message_content']");
 
     const data = {
-        appointment_id: 1,
+        appointment_id: SUPER_DATA.appointment_information.appointment_id,
         message_content: messageInput.value,
-        sender_id: 1,
-        recipient_id: 2,
+        sender_id: 2,
+        recipient_id: 1,
     };
 
     let apiUrl = `http://127.0.0.1:8000/api/chat`;
@@ -99,7 +105,6 @@ let uploadConsultationFinalBtn = document.querySelector(
 
 let modalCancelBtn = document.querySelectorAll(".modal-close");
 let finalEndConsultationBtn = document.getElementById("finalEndConsultation");
-console.log(finalEndConsultationBtn);
 let form = document.querySelector("#appointmentForm");
 
 let consultationParent = document.querySelector(".consultation");
@@ -128,8 +133,6 @@ uploadConsultationbtn?.addEventListener("click", function (e) {
 uploadConsultationFinalBtn?.addEventListener("click", function (e) {
     e.preventDefault();
     uploadConsultationModal.classList.remove("hidden");
-
-    console.log("as");
 
     // fetch
     // 1. upload file
@@ -200,6 +203,8 @@ finalEndConsultationBtn.addEventListener("click", function (event) {
         // successs
         .then((data) => {
             console.log(data);
+            currentStep = 4;
+            change_step(currentStep, progress, SUPER_DATA);
         })
         .catch((error) => {
             console.error("Error:", error);
@@ -278,6 +283,7 @@ if (appointmentId > 0) {
                     .toISOString()
                     .split("T")[0],
                 appointment_status: data.status,
+                appointment_step: data.step,
             };
             SUPER_DATA.personal_information.birthdate = new Date(
                 data.personal_information.birthdate
@@ -439,6 +445,20 @@ function step_one(progress, data) {
 }
 
 function step_three(progress, data) {
+    if (data.appointment_information.appointment_step >= 4) {
+        // message input
+        disable_input(progress.querySelector("input[name='message_content']"));
+        sendMessageBtn.classList.add("hidden");
+
+        // sms disable btn
+        progress.querySelector(".sms-disable-btn").classList.remove("hidden");
+
+        progress.querySelector(".next-btn").classList.remove("hidden");
+        endConsultationBtn.classList.add("hidden");
+    } else {
+        progress.querySelector(".sms-disable-btn").classList.add("hidden");
+    }
+
     // appointment number
     progress.querySelector(
         "input[name='appointment_number']"
@@ -471,43 +491,53 @@ function step_three(progress, data) {
             .then((response) => response.json())
             // successs
             .then((data) => {
-                previous_data = data;
-                let messageWhole = "";
+                if (data.length != previous_data) {
+                    console.log(data);
 
-                data.forEach((message) => {
-                    let messagerUser =
-                        message.sender_id === currentId
-                            ? "patient"
-                            : "diatetian";
+                    previous_data = data.length;
+                    let messageWhole = "";
 
-                    let messageTemplate = `
+                    data.forEach((message) => {
+                        let messagerUser =
+                            message.sender_id === currentId
+                                ? "patient"
+                                : "diatetian";
+
+                        let messageTemplate = `
         <div class="${
             messagerUser === "patient" ? "self-end" : "self-start"
         } w-11/12 p-2 bg-${
-                        messagerUser === "patient" ? "blue" : "gray"
-                    }-200 border rounded-md md:w-2/3">
+                            messagerUser === "patient" ? "blue" : "gray"
+                        }-200 border rounded-md md:w-2/3">
             <p>${message.message_content}
             </p>
         </div>`;
 
-                    messageWhole += messageTemplate;
-                });
+                        messageWhole += messageTemplate;
+                    });
 
-                progress.querySelector(".chat-box").innerHTML = messageWhole;
+                    progress.querySelector(".chat-box").innerHTML =
+                        messageWhole;
+                }
             })
             .catch((error) => {
                 console.error("Error:", error);
             });
-    }, 3000); // Call sayHello every 1000 milliseconds (1 second)
+    }, 3000);
 
-    // After 5 seconds, clear the interval to stop it
     setTimeout(() => {
-        clearInterval(intervalId); // Stops the interval
+        clearInterval(intervalId);
         console.log("Interval cleared!");
-    }, 500000);
+    }, 300000);
 }
 
-function step_four(progress, data) {}
+function step_four(progress, data) {
+    if (data.appointment_information.appointment_step >= 5) {
+        progress.querySelector(".next-btn").classList.remove("hidden");
+        uploadConsultationbtn.classList.add("hidden");
+    } else {
+    }
+}
 
 function step_five(progress, data) {}
 

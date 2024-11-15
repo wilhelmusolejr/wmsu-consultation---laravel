@@ -15,6 +15,13 @@ let SUPER_DATA = {
         appointment_date: "LOADING",
         appointment_status: "LOADING",
         appointment_id: "LOADING",
+        appointment_step: "LOADING",
+    },
+    dietitian_information: {
+        first_name: "LOADING",
+        last_name: "LOADING",
+        image: "LOADING",
+        id: "LOADING",
     },
     personal_information: {
         first_name: "LOADING",
@@ -210,6 +217,7 @@ finalAppointmentBtn.addEventListener("click", function (event) {
                     .toISOString()
                     .split("T")[0],
                 appointment_status: data.appointment_information.status,
+                appointment_step: data.appointment_information.step,
             };
             SUPER_DATA.personal_information = data.personal_information;
             SUPER_DATA.contact_information = data.contact_information;
@@ -329,6 +337,7 @@ if (appointmentId > 0) {
                     .toISOString()
                     .split("T")[0],
                 appointment_status: data.status,
+                appointment_step: data.step,
             };
             SUPER_DATA.personal_information.birthdate = new Date(
                 data.personal_information.birthdate
@@ -341,32 +350,6 @@ if (appointmentId > 0) {
         .catch((error) => {
             console.error("Error:", error);
         });
-}
-
-function step_two(progress, data) {
-    // appointment number
-    progress.querySelector(
-        "input[name='appointment_number']"
-    ).value = `#${data.appointment_information.appointment_id}`;
-
-    // appointment status
-    progress.querySelector(
-        "input[name='appointment_status']"
-    ).value = `${data.appointment_information.appointment_status.toUpperCase()}`;
-
-    // appointment date
-    progress.querySelector(
-        "input[name='appointment_date']"
-    ).value = `${data.appointment_information.appointment_date}`;
-
-    // submitAppointmentBtn.classList.add("hidden");
-    progress.querySelector(".doctor-container img").src =
-        "http://127.0.0.1:8000/images/blank_doctor.png";
-
-    // remove floating
-    progress
-        .querySelector(".doctor-container .floating-info")
-        .classList.add("hidden");
 }
 
 function step_one(progress, data) {
@@ -489,7 +472,77 @@ function step_one(progress, data) {
     disable_input(food_preference);
 }
 
+function step_two(progress, data) {
+    // appointment number
+    progress.querySelector(
+        "input[name='appointment_number']"
+    ).value = `#${data.appointment_information.appointment_id}`;
+
+    // appointment status
+    progress.querySelector(
+        "input[name='appointment_status']"
+    ).value = `${data.appointment_information.appointment_status.toUpperCase()}`;
+
+    // appointment date
+    progress.querySelector(
+        "input[name='appointment_date']"
+    ).value = `${data.appointment_information.appointment_date}`;
+
+    progress.querySelector(
+        ".doctor-container .name"
+    ).textContent = `Rnd LOADING`;
+
+    if (data.appointment_information.appointment_step >= 3) {
+        // disable button
+        progress.querySelector(".disabled-btn").classList.add("hidden");
+
+        // next button
+        progress.querySelector(".next-btn").classList.remove("hidden");
+
+        progress.querySelector(
+            ".doctor-container .name"
+        ).textContent = `Rnd ${data.dietitian_information.first_name} ${data.dietitian_information.last_name}`;
+
+        // dietitian assgined
+        progress.querySelector(
+            "input[name='assigned_instructor']"
+        ).value = `${data.dietitian_information.first_name} ${data.dietitian_information.last_name}`;
+    } else {
+        // submitAppointmentBtn.classList.add("hidden");
+        progress.querySelector(".doctor-container img").src =
+            "http://127.0.0.1:8000/images/blank_doctor.png";
+
+        // remove floating
+        progress
+            .querySelector(".doctor-container .floating-info")
+            .classList.add("hidden");
+    }
+}
+
 function step_three(progress, data) {
+    if (data.appointment_information.appointment_step >= 4) {
+        // disable button
+        progress.querySelector(".disabled-btn").classList.add("hidden");
+
+        // next button
+        progress.querySelector(".next-btn").classList.remove("hidden");
+
+        // message input
+        disable_input(progress.querySelector("input[name='message_content']"));
+        sendMessageBtn.classList.add("hidden");
+
+        // sms disable btn
+        progress.querySelector(".sms-disable-btn").classList.remove("hidden");
+    } else {
+        progress.querySelector(".sms-disable-btn").classList.add("hidden");
+    }
+
+    console.log(data);
+
+    progress.querySelector(
+        ".doctor-container .name"
+    ).textContent = `Rnd ${data.dietitian_information.first_name} ${data.dietitian_information.last_name}`;
+
     // appointment number
     progress.querySelector(
         "input[name='appointment_number']"
@@ -522,43 +575,55 @@ function step_three(progress, data) {
             .then((response) => response.json())
             // successs
             .then((data) => {
-                previous_data = data;
-                let messageWhole = "";
+                if (data.length != previous_data) {
+                    console.log(data);
 
-                data.forEach((message) => {
-                    let messagerUser =
-                        message.sender_id === currentId
-                            ? "patient"
-                            : "diatetian";
+                    previous_data = data.length;
+                    let messageWhole = "";
 
-                    let messageTemplate = `
+                    data.forEach((message) => {
+                        let messagerUser =
+                            message.sender_id === currentId
+                                ? "patient"
+                                : "diatetian";
+
+                        let messageTemplate = `
         <div class="${
             messagerUser === "patient" ? "self-end" : "self-start"
         } w-11/12 p-2 bg-${
-                        messagerUser === "patient" ? "blue" : "gray"
-                    }-200 border rounded-md md:w-2/3">
+                            messagerUser === "patient" ? "blue" : "gray"
+                        }-200 border rounded-md md:w-2/3">
             <p>${message.message_content}
             </p>
         </div>`;
 
-                    messageWhole += messageTemplate;
-                });
+                        messageWhole += messageTemplate;
+                    });
 
-                progress.querySelector(".chat-box").innerHTML = messageWhole;
+                    progress.querySelector(".chat-box").innerHTML =
+                        messageWhole;
+                }
             })
             .catch((error) => {
                 console.error("Error:", error);
             });
-    }, 3000); // Call sayHello every 1000 milliseconds (1 second)
+    }, 3000);
 
-    // After 5 seconds, clear the interval to stop it
     setTimeout(() => {
-        clearInterval(intervalId); // Stops the interval
+        clearInterval(intervalId);
         console.log("Interval cleared!");
-    }, 500000);
+    }, 300000);
 }
 
 function step_four(progress, data) {
+    if (data.appointment_information.appointment_step >= 5) {
+        // disable button
+        progress.querySelector(".disabled-btn").classList.add("hidden");
+
+        // next button
+        progress.querySelector(".next-btn").classList.remove("hidden");
+    }
+
     // appointment number
     progress.querySelector(
         "input[name='appointment_number']"
