@@ -275,12 +275,26 @@ consultationParent.addEventListener("click", function (e) {
     if (e.target.classList.contains("next-btn")) {
         currentStep += 1;
 
+        if (
+            currentStep == 4 &&
+            SUPER_DATA.appointment_information.appointment_step >= 5
+        ) {
+            currentStep = 5;
+        }
+
         change_step(currentStep, progress, SUPER_DATA);
     }
 
     // Previous button
     if (e.target.classList.contains("previous-btn")) {
         currentStep -= 1;
+
+        if (
+            currentStep == 4 &&
+            SUPER_DATA.appointment_information.appointment_step >= 5
+        ) {
+            currentStep = 3;
+        }
 
         change_step(currentStep, progress, SUPER_DATA);
     }

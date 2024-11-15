@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\ScheduleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -11,6 +12,7 @@ Route::patch('/appointment/{id}', [AppointmentController::class, 'update']);
 
 Route::patch('/consultation/{id}', [AppointmentController::class, 'update']);
 
+Route::post('/schedule', [ScheduleController::class, 'store']);
 
 Route::post('/chat', [ChatController::class, 'store']);
 Route::post('/chat/{id}', [ChatController::class, 'index']);

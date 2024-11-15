@@ -351,11 +351,13 @@
                                 <p>1 hour left</p>
                             </div>
                         </div>
+
+
                     </div>
                 </div>
 
                 {{-- grid 2 --}}
-                <div class="flex-1 border rounded-md md:p-5 ">
+                <div class="flex-1 w-full p-2 border rounded-md md:p-5">
                     <div class="mb-5">
                         <x-input type="text" name="chief_complain" label="Chief Complaint" value="tite"
                             disabled />
@@ -369,7 +371,7 @@
 
 
 
-                            <div class="items-center justify-center flex-1 flex h-full p-5 bg-blue-300 rounded-md ">
+                            <div class="flex items-center justify-center flex-1 h-full p-5 bg-blue-300 rounded-md ">
                                 <p>
                                     LOADING
                                 </p>
@@ -487,14 +489,15 @@
                     <div class="p-0 border rounded-md lg:p-5">
                         <div class="border border-black rounded-md bg-gray-50 min-h-60">
                             <h2 class="p-5 font-medium tracking-wider text-center text-white uppercase bg-green-800 ">
-                                upcoming schedule</h2>
+                                Files</h2>
                             <div class="">
                                 {{-- item --}}
-                                <div class="m-5">
-                                    <x-input type="text" name="chief_complain" label="Consultation Result" />
+                                <div class="m-5 overflow-hidden">
+                                    {{-- <x-input type="text" name="chief_complain" label="Consultation Result" /> --}}
+                                    <a href="#" class="underline">#1_consultation_result.pdf</a>
                                 </div>
-                                <div class="m-5">
-                                    <x-input type="text" name="chief_complain" label="Conversation Transcript" />
+                                <div class="m-5 overflow-hidden">
+                                    <a href="#" class="underline">#1_consersation_transcript.pdf</a>
                                 </div>
                             </div>
                         </div>

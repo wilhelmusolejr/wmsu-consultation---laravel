@@ -69,7 +69,7 @@
                             value="#123" disabled />
                     </div>
 
-                    <div class="border border-black rounded-md bg-gray-50 min-h-60">
+                    <div class="relative border border-black rounded-md bg-gray-50 min-h-60">
                         <h2 class="p-5 font-medium tracking-wider text-center text-white uppercase bg-green-800 ">
                             upcoming schedule</h2>
                         <div class="">
@@ -77,14 +77,19 @@
                             <div class="flex flex-wrap items-center justify-around py-5 bg-green-100">
                                 <p>11/11/24</p>
                                 <p>04:30pm</p>
-                                <p>1 hour left</p>
+                            </div>
+                        </div>
+
+                        <div class="absolute transform -translate-x-1/2 bottom-2 left-1/2">
+                            <div class="flex items-center justify-center w-10 h-10 border rounded-md cursor-pointer hover:bg-black hover:text-white add-schedule-btn">
+                                <i class="fa-solid fa-plus"></i>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 {{-- grid 2 --}}
-                <div class="flex-1 border rounded-md md:p-5 ">
+                <div class="flex-1 w-full p-2 border rounded-md md:p-5 ">
                     <div class="mb-5">
                         <x-input type="text" name="chief_complain" label="Chief Complaint" value="tite" disabled />
                     </div>
@@ -194,7 +199,6 @@
         </x-modal-footer>
     </x-modal>
 
-
     {{-- Modal for Confirming Upload of Consultation Result --}}
     <x-modal class="modal-upload-consultation-result">
         {{-- Header --}}
@@ -216,6 +220,36 @@
             </div>
         </x-modal-footer>
     </x-modal>
+
+    {{-- Modal for adding new schedule --}}
+    <x-modal class="modal-add-schedule">
+        {{-- Header --}}
+        <x-modal-header>Add schedule</x-modal-header>
+
+        {{-- Body --}}
+        <x-modal-body>
+            <form>
+                @csrf
+                <div class="flex flex-col gap-5">
+                    <x-input type="date" name="schedule_date" label="Date" required />
+                    <x-input type="time" name="schedule_time" label="time" required />
+                </div>
+            </form>
+        </x-modal-body>
+
+        {{-- Footer --}}
+        <x-modal-footer>
+            <div class="flex items-center justify-center gap-5">
+                {{-- Close the modal on click --}}
+                <p class="cursor-pointer modal-close">Cancel</p>
+
+                {{-- Confirm action --}}
+                <x-button id="addScheduleFinalBtn" type="button">add</x-button>
+            </div>
+        </x-modal-footer>
+    </x-modal>
+
+
     <br>
     <br>
     <br>

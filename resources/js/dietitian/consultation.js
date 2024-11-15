@@ -479,56 +479,56 @@ function step_three(progress, data) {
     let previous_data;
 
     // Start the interval and save its ID
-    let intervalId = setInterval(function () {
-        fetch(url, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        })
-            // Parse JSON response
-            .then((response) => response.json())
-            // successs
-            .then((data) => {
-                if (data.length != previous_data) {
-                    console.log(data);
+    // let intervalId = setInterval(function () {
+    //     fetch(url, {
+    //         method: "POST",
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //         },
+    //         body: JSON.stringify(data),
+    //     })
+    //         // Parse JSON response
+    //         .then((response) => response.json())
+    //         // successs
+    //         .then((data) => {
+    //             if (data.length != previous_data) {
+    //                 console.log(data);
 
-                    previous_data = data.length;
-                    let messageWhole = "";
+    //                 previous_data = data.length;
+    //                 let messageWhole = "";
 
-                    data.forEach((message) => {
-                        let messagerUser =
-                            message.sender_id === currentId
-                                ? "patient"
-                                : "diatetian";
+    //                 data.forEach((message) => {
+    //                     let messagerUser =
+    //                         message.sender_id === currentId
+    //                             ? "patient"
+    //                             : "diatetian";
 
-                        let messageTemplate = `
-        <div class="${
-            messagerUser === "patient" ? "self-end" : "self-start"
-        } w-11/12 p-2 bg-${
-                            messagerUser === "patient" ? "blue" : "gray"
-                        }-200 border rounded-md md:w-2/3">
-            <p>${message.message_content}
-            </p>
-        </div>`;
+    //                     let messageTemplate = `
+    //     <div class="${
+    //         messagerUser === "patient" ? "self-end" : "self-start"
+    //     } w-11/12 p-2 bg-${
+    //                         messagerUser === "patient" ? "blue" : "gray"
+    //                     }-200 border rounded-md md:w-2/3">
+    //         <p>${message.message_content}
+    //         </p>
+    //     </div>`;
 
-                        messageWhole += messageTemplate;
-                    });
+    //                     messageWhole += messageTemplate;
+    //                 });
 
-                    progress.querySelector(".chat-box").innerHTML =
-                        messageWhole;
-                }
-            })
-            .catch((error) => {
-                console.error("Error:", error);
-            });
-    }, 3000);
+    //                 progress.querySelector(".chat-box").innerHTML =
+    //                     messageWhole;
+    //             }
+    //         })
+    //         .catch((error) => {
+    //             console.error("Error:", error);
+    //         });
+    // }, 3000);
 
-    setTimeout(() => {
-        clearInterval(intervalId);
-        console.log("Interval cleared!");
-    }, 300000);
+    // setTimeout(() => {
+    //     clearInterval(intervalId);
+    //     console.log("Interval cleared!");
+    // }, 300000);
 }
 
 function step_four(progress, data) {
@@ -597,3 +597,43 @@ function getCurrentDateTime() {
 
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
+
+let addScheduleBtn = document.querySelector(".add-schedule-btn");
+let addScheduleModal = document.querySelector(".modal-add-schedule");
+
+let addScheduleFinalBtn = document.querySelector("#addScheduleFinalBtn");
+
+addScheduleBtn.addEventListener("click", function () {
+    addScheduleModal.classList.remove("hidden");
+});
+
+addScheduleFinalBtn.addEventListener("click", function () {
+    let date = document.querySelector("input[name='schedule_date']");
+    let time = document.querySelector("input[name='schedule_time']");
+
+    let data = {
+        appointment_id: SUPER_DATA.appointment_information.appointment_id,
+        schedule_date: `${date.value} ${time.value}`,
+    };
+
+    console.log(data);
+
+    let apiUrl = ``;
+
+    // fetch(apiUrl, {
+    //     method: "POST",
+    //     headers: {
+    //         "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify(data),
+    // })
+    //     // Parse JSON response
+    //     .then((response) => response.json());
+    // // successs
+    // console
+    //     .log(data)
+    //     .then((data) => {})
+    //     .catch((error) => {
+    //         console.error("Error:", error);
+    //     });
+});
