@@ -4,7 +4,7 @@
         type="{{ $type }}"
         id="{{ $name }}"
         name="{{ $name }}"
-        class="rounded-md {{ $disabled ?? false ? 'bg-gray-100' : '' }}"
+        class="rounded-md {{ $disabled ?? false ? 'bg-gray-200' : '' }}"
         {{ $disabled ?? false ? 'disabled' : '' }}
         value="{{ $value ?? '' }}"
         {{ $required ?? false? "required" : "" }}

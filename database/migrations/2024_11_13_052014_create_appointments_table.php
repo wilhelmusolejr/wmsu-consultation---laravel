@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('patient_id')->constrained('users')->onDelete('cascade');
             $table->string('dietitian_id')->default('pending');
+            $table->enum('appointment_for', ['myself', 'others']);
+            $table->dateTime('appointment_date_completed')->nullable();
             $table->dateTime('appointment_date');
             $table->string('status')->default('pending');
             $table->integer('step');

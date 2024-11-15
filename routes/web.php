@@ -15,6 +15,15 @@ Route::get('/consultation/{id}', function ($id) {
     return view('consultation', compact('id'));
 });
 
+// DIETITIAN
+Route::get('/dietitian/consultation', function () {
+    return view('dietitian.consultation');
+});
+
+Route::get('/dietitian/consultation/{id}', function ($id) {
+    return view('dietitian.consultation', compact('id')); // Dietitian view with ID
+});
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })

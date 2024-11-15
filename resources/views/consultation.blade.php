@@ -153,8 +153,6 @@
                             <x-input type="date" name="appointment_date" label="Appointment Date" required />
                         </div>
                         <h3 class="hidden w-1/3 md:block"></h3>
-
-
                     </div>
                 </div>
 
@@ -320,7 +318,7 @@
 
             </div>
 
-            <x-consultation.button-parent class="">
+            <x-consultation.button-parent class="justify-between">
                 <x-button class="previous-btn">Previous</x-button>
                 <x-button class="next-btn">Next</x-button>
             </x-consultation.button-parent>
@@ -390,7 +388,7 @@
                 </div>
             </div>
 
-            <x-consultation.button-parent class="">
+            <x-consultation.button-parent class="justify-between">
                 <x-button class="previous-btn">Previous</x-button>
                 <x-button class="next-btn">Next</x-button>
             </x-consultation.button-parent>
@@ -437,7 +435,7 @@
                 </div>
             </div>
 
-            <x-consultation.button-parent class="">
+            <x-consultation.button-parent class="justify-between">
                 <x-button class="previous-btn">Previous</x-button>
                 <x-button class="next-btn">Next</x-button>
             </x-consultation.button-parent>
@@ -496,7 +494,7 @@
                 </div>
             </div>
 
-            <x-consultation.button-parent class="">
+            <x-consultation.button-parent class="justify-between">
                 <x-button class="previous-btn">Previous</x-button>
                 <x-button><a href="/">Home</a></x-button>
             </x-consultation.button-parent>

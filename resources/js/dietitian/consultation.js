@@ -86,12 +86,20 @@ sendMessageBtn.addEventListener("click", function (e) {
         });
 });
 
-let submitAppointmentBtn = document.querySelector(".appointment-btn");
-let submitAppointmentModal = document.querySelector(
-    ".modal-submit-consultation"
+let endConsultationBtn = document.querySelector(".end-monitoring-btn");
+let endConsultationModal = document.querySelector(".modal-end-consultation");
+
+let uploadConsultationbtn = document.querySelector(".upload-consultation-btn");
+let uploadConsultationModal = document.querySelector(
+    ".modal-upload-consultation-result"
 );
+let uploadConsultationFinalBtn = document.querySelector(
+    "#finalUploadConsultationResult"
+);
+
 let modalCancelBtn = document.querySelectorAll(".modal-close");
-let finalAppointmentBtn = document.getElementById("submitButton");
+let finalEndConsultationBtn = document.getElementById("finalEndConsultation");
+console.log(finalEndConsultationBtn);
 let form = document.querySelector("#appointmentForm");
 
 let consultationParent = document.querySelector(".consultation");
@@ -105,92 +113,37 @@ const pathParts = currentPath.split("/");
 const appointmentId = pathParts[pathParts.length - 1];
 
 // Show modal when submit btn is pressed
-submitAppointmentBtn?.addEventListener("click", function (e) {
+endConsultationBtn?.addEventListener("click", function (e) {
     e.preventDefault();
 
-    // when input is invalid
-    Array.from(form.elements).forEach(function (input) {
-        if (!input.checkValidity()) {
-            input.classList.add("invalid-input");
-        } else {
-            input.classList.remove("invalid-input");
-        }
-    });
-
-    if (form.checkValidity()) {
-        submitAppointmentModal.classList.remove("hidden");
-    }
+    endConsultationModal.classList.remove("hidden");
 });
 
-// Hide modal when modal close button is pressed
-submitAppointmentModal.addEventListener("click", function (e) {
+//
+uploadConsultationbtn?.addEventListener("click", function (e) {
     e.preventDefault();
-
-    if (e.target.classList.contains("modal-close")) {
-        submitAppointmentModal.classList.add("hidden");
-    }
+    uploadConsultationModal.classList.remove("hidden");
 });
 
-// Consultation Form Submission
-finalAppointmentBtn.addEventListener("click", function (event) {
-    event.preventDefault();
+uploadConsultationFinalBtn?.addEventListener("click", function (e) {
+    e.preventDefault();
+    uploadConsultationModal.classList.remove("hidden");
 
-    const data = {};
+    console.log("as");
 
-    data.appointment_information = {
-        appointment_date: form.querySelector("input[name='appointment_date']")
-            .value,
-        patient_id: 1,
-    };
-    data.personal_information = {
-        first_name: form.querySelector("input[name='first_name']").value,
-        last_name: form.querySelector("input[name='last_name']").value,
-        birthdate: form.querySelector("input[name='birthdate']").value,
-        gender: form.querySelector("select[name='consult_gender']").value,
-    };
-    data.contact_information = {
-        phone_number: form.querySelector("input[name='phone_numer']").value,
-        email: form.querySelector("input[name='email']").value,
-    };
-    data.consultation_information = {
-        chief_complaint: form.querySelector("input[name='chief_complain']")
-            .value,
-        referral_form: form.querySelector("input[name='referral_form']").value,
-    };
-    data.health_information = {
-        height: form.querySelector("input[name='height']").value,
-        weight: form.querySelector("input[name='weight']").value,
-        weight_changed_past_year: form.querySelector(
-            "select[name='consult_weight_changed_past_year']"
-        ).value,
-        exercise: form.querySelector("select[name='consult_exercise']").value,
-        medical_reason: form.querySelector(
-            "select[name='consult_medical_reason']"
-        ).value,
-        stress_level: form.querySelector("select[name='consult_stress_level']")
-            .value,
-    };
-    data.nutrition_information = {
-        meet_past_dietitian: form.querySelector(
-            "select[name='consult_meet_past_dietician']"
-        ).value,
-        special_diet: form.querySelector("select[name='consult_special_diet']")
-            .value,
-        food_preference: form.querySelector("input[name='food_preference']")
-            .value,
-        who_grocery: form.querySelector("select[name='consult_who_grocery']")
-            .value,
-        who_prepare_meal: form.querySelector(
-            "select[name='consult_who_prepare_meal']"
-        ).value,
-        skip_meals: form.querySelector("select[name='consult_skip_meals']")
-            .value,
+    // fetch
+    // 1. upload file
+    // 2. update appointment date completed
+
+    let data = {
+        step: 5,
+        appointment_date_completed: getCurrentDateTime(),
     };
 
-    finalAppointmentBtn.textContent = "Submitting...";
+    let apiUrl = `http://127.0.0.1:8000/api/appointment/${SUPER_DATA.appointment_information.appointment_id}`;
 
     fetch(apiUrl, {
-        method: "POST",
+        method: "PATCH",
         headers: {
             "Content-Type": "application/json",
         },
@@ -200,57 +153,53 @@ finalAppointmentBtn.addEventListener("click", function (event) {
         .then((response) => response.json())
         // successs
         .then((data) => {
-            currentStep = data.appointment_information.step;
+            uploadConsultationModal.classList.add("hidden");
 
-            SUPER_DATA.appointment_information = {
-                appointment_id: data.appointment_information.id,
-                appointment_date: new Date(
-                    data.appointment_information.appointment_date
-                )
-                    .toISOString()
-                    .split("T")[0],
-                appointment_status: data.appointment_information.status,
-            };
-            SUPER_DATA.personal_information = data.personal_information;
-            SUPER_DATA.contact_information = data.contact_information;
-            SUPER_DATA.consultation_information = data.consultation_information;
-            SUPER_DATA.health_information = data.health_information;
-            SUPER_DATA.nutrition_information = data.nutrition_information;
+            currentStep = 5;
 
-            // add green bg
-            submitAppointmentModal
-                .querySelector(".modal-container")
-                .classList.add("bg-green-100");
+            change_step(currentStep, progress, SUPER_DATA);
+        })
+        .catch((error) => {
+            console.error("Error:", error);
+        });
+});
 
-            // change HEADER to Success
-            submitAppointmentModal.querySelector(
-                ".modal-header h2"
-            ).textContent = "Success";
+// Hide modal when modal close button is pressed
 
-            // Remove cancel button
-            submitAppointmentModal
-                .querySelector(".modal-close")
-                .classList.add("hidden");
+// Consultation Form Submission
+finalEndConsultationBtn.addEventListener("click", function (event) {
+    event.preventDefault();
 
-            // Change DESCRIPTION
-            submitAppointmentModal.querySelector(
-                ".modal-body .modal-info"
-            ).textContent = "Your appointment has been submitted successfully";
+    endConsultationModal.classList.add("hidden");
+    endConsultationBtn.classList.add("hidden");
 
-            // Change button to Redirecting
-            finalAppointmentBtn.textContent = "Redirecting in ...";
+    progress[currentStep - 1]
+        .querySelector(".next-btn")
+        .classList.remove("hidden");
 
-            // Create an interval to update the button text every second
-            let interval = setInterval(() => {
-                finalAppointmentBtn.textContent = `Redirecting in ${countdown}...`;
-                countdown--;
+    // change step in appointment to 4
+    //
 
-                if (countdown < 0) {
-                    clearInterval(interval); // hide current modal submitAppointmentModal.classList.add("hidden");
-                    submitAppointmentModal.classList.add("hidden");
-                    change_step(currentStep, progress, SUPER_DATA);
-                }
-            }, 1000);
+    // finalAppointmentBtn.textContent = "Submitting...";
+
+    let data = {
+        step: 4,
+    };
+
+    let apiUrl = `http://127.0.0.1:8000/api/appointment/${SUPER_DATA.appointment_information.appointment_id}`;
+
+    fetch(apiUrl, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    })
+        // Parse JSON response
+        .then((response) => response.json())
+        // successs
+        .then((data) => {
+            console.log(data);
         })
         .catch((error) => {
             console.error("Error:", error);
@@ -558,36 +507,9 @@ function step_three(progress, data) {
     }, 500000);
 }
 
-function step_four(progress, data) {
-    // appointment number
-    progress.querySelector(
-        "input[name='appointment_number']"
-    ).value = `#${data.appointment_information.appointment_id}`;
+function step_four(progress, data) {}
 
-    // appointment date
-    progress.querySelector(
-        "input[name='appointment_date_submitted']"
-    ).value = `${data.appointment_information.appointment_date}`;
-
-    // appointment date completed
-    progress.querySelector(
-        "input[name='appointment_date_completed']"
-    ).value = `${data.appointment_information.appointment_date}`;
-
-    // Chief complaint
-    let chief_complaint = progress.querySelector(
-        "input[name='chief_complain']"
-    );
-    chief_complaint.value = `${data.consultation_information.chief_complaint}`;
-    disable_input(chief_complaint);
-}
-
-function step_five(progress, data) {
-    // appointment number
-    progress.querySelector(
-        "input[name='appointment_number']"
-    ).value = `#${data.appointment_information.appointment_id}`;
-}
+function step_five(progress, data) {}
 
 function change_step(currentStep, progress, data) {
     progress.forEach((progress) => {
@@ -632,4 +554,16 @@ function setOptionValue(element, target) {
             option.selected = true;
         }
     });
+}
+
+function getCurrentDateTime() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0"); // months are zero-based
+    const day = String(now.getDate()).padStart(2, "0");
+    const hours = String(now.getHours()).padStart(2, "0");
+    const minutes = String(now.getMinutes()).padStart(2, "0");
+    const seconds = String(now.getSeconds()).padStart(2, "0");
+
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }

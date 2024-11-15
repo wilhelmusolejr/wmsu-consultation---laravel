@@ -13,13 +13,7 @@ class AppointmentController extends Controller
         $patient_id = $request->input('patient_id');
 
         // Find the appointment by its ID, including related data
-        $appointment = Appointment::with([
-            'personalInformation',
-            'contactInformation',
-            'consultationInformation',
-            'healthInformation',
-            'nutritionInformation'
-        ])->find($id);
+        $appointment = Appointment::with(['personalInformation', 'contactInformation', 'consultationInformation', 'healthInformation', 'nutritionInformation'])->find($id);
 
         // Check if the appointment exists and if the patient_id matches
         if ($appointment && $appointment->patient_id == $patient_id) {
@@ -39,6 +33,7 @@ class AppointmentController extends Controller
             'patient_id' => $appointment_info['patient_id'],
             'dietitian_id' => 'pending',
             'status' => 'pending',
+            'appointment_for' => 'myself',
             'step' => 2,
         ]);
 
@@ -58,5 +53,28 @@ class AppointmentController extends Controller
         ];
 
         return response()->json($data, 201);
+    }
+
+    public function update(Request $request, $id)
+    {
+        // Find the appointment by ID
+        $appointment = Appointment::find($id);
+
+        // Check if the appointment exists
+        if (!$appointment) {
+            return response()->json(['message' => 'Appointment not found'], 404);
+        }
+
+        // If 'appointment_date_completed' is provided in the request, update it
+        if ($request->has('appointment_date_completed')) {
+            // Ensure appointment_date_completed is in the correct format (optional)
+            $appointment->appointment_date_completed = $request->input('appointment_date_completed');
+        }
+
+        // Update the appointment with all provided request data (except 'appointment_date_completed' handled above)
+        $appointment->update($request->except('appointment_date_completed'));
+
+        // Return a success response
+        return response()->json(['message' => 'Appointment updated successfully', 'appointment' => $appointment], 200);
     }
 }
