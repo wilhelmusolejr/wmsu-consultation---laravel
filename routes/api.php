@@ -13,6 +13,7 @@ Route::patch('/appointment/{id}', [AppointmentController::class, 'update']);
 Route::patch('/consultation/{id}', [AppointmentController::class, 'update']);
 
 Route::post('/schedule', [ScheduleController::class, 'store']);
+Route::post('/schedule/{id}', [ScheduleController::class, 'index']);
 
 Route::post('/chat', [ChatController::class, 'store']);
 Route::post('/chat/{id}', [ChatController::class, 'index']);

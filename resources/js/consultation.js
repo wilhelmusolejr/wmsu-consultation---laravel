@@ -551,8 +551,6 @@ function step_three(progress, data) {
         progress.querySelector(".sms-disable-btn").classList.add("hidden");
     }
 
-    console.log(data);
-
     progress.querySelector(
         ".doctor-container .name"
     ).textContent = `Rnd ${data.dietitian_information.first_name} ${data.dietitian_information.last_name}`;
@@ -627,6 +625,33 @@ function step_three(progress, data) {
         clearInterval(intervalId);
         console.log("Interval cleared!");
     }, 300000);
+
+    let apiUrl = `http://127.0.0.1:8000/api/schedule/${SUPER_DATA.appointment_information.appointment_id}`;
+
+    fetch(apiUrl, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    })
+        // Parse JSON response
+        .then((response) => response.json())
+        .then((data) => {
+            let markUp = "";
+
+            data.schedules.forEach((schedule) => {
+                markUp += `<div class="flex flex-wrap items-center justify-around py-5 bg-green-100">
+                                <p>${schedule.formatted_date}</p>
+                                <p>${schedule.formatted_time}</p>
+                            </div>`;
+            });
+
+            progress.querySelector(".schedule-container").innerHTML = markUp;
+        })
+        .catch((error) => {
+            console.error("Error:", error);
+        });
 }
 
 function step_four(progress, data) {

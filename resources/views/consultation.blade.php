@@ -343,11 +343,10 @@
                     <div class="border border-black rounded-md bg-gray-50 min-h-60">
                         <h2 class="p-5 font-medium tracking-wider text-center text-white uppercase bg-green-800 ">
                             upcoming schedule</h2>
-                        <div class="">
+                        <div class="schedule-container">
                             {{-- item --}}
                             <div class="flex flex-wrap items-center justify-around py-5 bg-green-100">
                                 <p>11/11/24</p>
-                                <p>04:30pm</p>
                                 <p>1 hour left</p>
                             </div>
                         </div>

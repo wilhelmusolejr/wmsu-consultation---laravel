@@ -167,8 +167,6 @@ uploadConsultationFinalBtn?.addEventListener("click", function (e) {
         });
 });
 
-// Hide modal when modal close button is pressed
-
 // Consultation Form Submission
 finalEndConsultationBtn.addEventListener("click", function (event) {
     event.preventDefault();
@@ -479,56 +477,85 @@ function step_three(progress, data) {
     let previous_data;
 
     // Start the interval and save its ID
-    // let intervalId = setInterval(function () {
-    //     fetch(url, {
-    //         method: "POST",
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //         },
-    //         body: JSON.stringify(data),
-    //     })
-    //         // Parse JSON response
-    //         .then((response) => response.json())
-    //         // successs
-    //         .then((data) => {
-    //             if (data.length != previous_data) {
-    //                 console.log(data);
+    let intervalId = setInterval(function () {
+        fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        })
+            // Parse JSON response
+            .then((response) => response.json())
+            // successs
+            .then((data) => {
+                if (data.length != previous_data) {
+                    console.log(data);
 
-    //                 previous_data = data.length;
-    //                 let messageWhole = "";
+                    previous_data = data.length;
+                    let messageWhole = "";
 
-    //                 data.forEach((message) => {
-    //                     let messagerUser =
-    //                         message.sender_id === currentId
-    //                             ? "patient"
-    //                             : "diatetian";
+                    data.forEach((message) => {
+                        let messagerUser =
+                            message.sender_id === currentId
+                                ? "patient"
+                                : "diatetian";
 
-    //                     let messageTemplate = `
-    //     <div class="${
-    //         messagerUser === "patient" ? "self-end" : "self-start"
-    //     } w-11/12 p-2 bg-${
-    //                         messagerUser === "patient" ? "blue" : "gray"
-    //                     }-200 border rounded-md md:w-2/3">
-    //         <p>${message.message_content}
-    //         </p>
-    //     </div>`;
+                        let messageTemplate = `
+        <div class="${
+            messagerUser === "patient" ? "self-end" : "self-start"
+        } w-11/12 p-2 bg-${
+                            messagerUser === "patient" ? "blue" : "gray"
+                        }-200 border rounded-md md:w-2/3">
+            <p>${message.message_content}
+            </p>
+        </div>`;
 
-    //                     messageWhole += messageTemplate;
-    //                 });
+                        messageWhole += messageTemplate;
+                    });
 
-    //                 progress.querySelector(".chat-box").innerHTML =
-    //                     messageWhole;
-    //             }
-    //         })
-    //         .catch((error) => {
-    //             console.error("Error:", error);
-    //         });
-    // }, 3000);
+                    progress.querySelector(".chat-box").innerHTML =
+                        messageWhole;
+                }
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
+    }, 3000);
 
-    // setTimeout(() => {
-    //     clearInterval(intervalId);
-    //     console.log("Interval cleared!");
-    // }, 300000);
+    setTimeout(() => {
+        clearInterval(intervalId);
+        console.log("Interval cleared!");
+    }, 300000);
+
+    let apiUrl = `http://127.0.0.1:8000/api/schedule/${SUPER_DATA.appointment_information.appointment_id}`;
+
+    fetch(apiUrl, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    })
+        // Parse JSON response
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data);
+
+            let markUp = "";
+
+            data.schedules.forEach((schedule) => {
+                markUp += `<div class="flex border-b flex-wrap items-center justify-around py-5 bg-green-100">
+                                <p>${schedule.formatted_date}</p>
+                                <p>${schedule.formatted_time}</p>
+                            </div>`;
+            });
+
+            progress.querySelector(".schedule-container").innerHTML = markUp;
+        })
+        .catch((error) => {
+            console.error("Error:", error);
+        });
 }
 
 function step_four(progress, data) {
@@ -616,24 +643,36 @@ addScheduleFinalBtn.addEventListener("click", function () {
         schedule_date: `${date.value} ${time.value}`,
     };
 
-    console.log(data);
+    let apiUrl = `http://127.0.0.1:8000/api/schedule`;
 
-    let apiUrl = ``;
+    fetch(apiUrl, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    })
+        // Parse JSON response
+        .then((response) => response.json())
+        .then((data) => {
+            // successs
+            date.value = "";
+            time.value = "";
+            addScheduleModal.classList.add("hidden");
+        })
+        .catch((error) => {
+            console.error("Error:", error);
+        });
+});
 
-    // fetch(apiUrl, {
-    //     method: "POST",
-    //     headers: {
-    //         "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify(data),
-    // })
-    //     // Parse JSON response
-    //     .then((response) => response.json());
-    // // successs
-    // console
-    //     .log(data)
-    //     .then((data) => {})
-    //     .catch((error) => {
-    //         console.error("Error:", error);
-    //     });
+// Hide modal when modal close button is pressed
+addScheduleModal.addEventListener("click", function (e) {
+    e.preventDefault();
+
+    if (
+        e.target.classList.contains("modal-close") ||
+        e.target.classList.contains("modal")
+    ) {
+        addScheduleModal.classList.add("hidden");
+    }
 });
