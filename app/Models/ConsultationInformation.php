@@ -14,4 +14,10 @@ class ConsultationInformation extends Model
         'chief_complaint',
         'referral_form',
     ];
+
+      // Relationship with Appointment
+      public function appointment()
+      {
+          return $this->belongsTo(Appointment::class);
+      }
 }

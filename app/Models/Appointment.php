@@ -35,4 +35,11 @@ class Appointment extends Model
     {
         return $this->hasOne(NutritionInformation::class, 'appointment_id');
     }
+
+    // Relationship with User (Dietitian)
+    public function dietitianInformation()
+    {
+        return $this->belongsTo(User::class, 'dietitian_id');
+    }
+
 }

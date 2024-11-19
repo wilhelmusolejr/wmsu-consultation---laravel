@@ -1,4 +1,7 @@
 const apiUrl = "http://127.0.0.1:8000/api/appointment";
+const token = localStorage.getItem("api_token");
+
+console.log(token);
 
 // VARIABLES
 let countdown = 1;
@@ -8,7 +11,7 @@ let currentId = 2;
 
 // DATA
 let SUPER_DATA = {
-    appointment_id: 1,
+    appointment_id: "LOADING",
     appointment_date: "LOADING",
     appointment_status: "LOADING",
     appointment_information: {
@@ -64,8 +67,7 @@ sendMessageBtn.addEventListener("click", function (e) {
     const data = {
         appointment_id: SUPER_DATA.appointment_information.appointment_id,
         message_content: messageInput.value,
-        sender_id: 2,
-        recipient_id: 1,
+        recipient_id: SUPER_DATA.personal_information.id,
     };
 
     let apiUrl = `http://127.0.0.1:8000/api/chat`;
@@ -74,6 +76,7 @@ sendMessageBtn.addEventListener("click", function (e) {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(data),
     })
@@ -149,6 +152,7 @@ uploadConsultationFinalBtn?.addEventListener("click", function (e) {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(data),
     })
@@ -193,6 +197,7 @@ finalEndConsultationBtn.addEventListener("click", function (event) {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(data),
     })
@@ -250,18 +255,14 @@ consultationParent.addEventListener("click", function (e) {
 // FOR SEARCH FUNCTION
 // FOR SEARCH FUNCTION
 if (appointmentId > 0) {
-    let data = {
-        patient_id: 1,
-    };
-
     let url = `${apiUrl}/${appointmentId}`;
 
     fetch(url, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(data),
     })
         // Parse JSON response
         .then((response) => response.json())
@@ -288,6 +289,8 @@ if (appointmentId > 0) {
             )
                 .toISOString()
                 .split("T")[0];
+
+            console.log(SUPER_DATA);
 
             change_step(currentStep, progress, SUPER_DATA);
         })

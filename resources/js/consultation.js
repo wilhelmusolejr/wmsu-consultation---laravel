@@ -1,4 +1,5 @@
 const apiUrl = "http://127.0.0.1:8000/api/appointment";
+const token = localStorage.getItem("api_token");
 
 // VARIABLES
 let countdown = 1;
@@ -8,7 +9,7 @@ let currentId = 1;
 
 // DATA
 let SUPER_DATA = {
-    appointment_id: 1,
+    appointment_id: "LOADING",
     appointment_date: "LOADING",
     appointment_status: "LOADING",
     appointment_information: {
@@ -63,10 +64,9 @@ sendMessageBtn.addEventListener("click", function (e) {
     let messageInput = chatForm.querySelector("input[name='message_content']");
 
     const data = {
-        appointment_id: 1,
+        appointment_id: SUPER_DATA.appointment_information.appointment_id,
         message_content: messageInput.value,
-        sender_id: 1,
-        recipient_id: 2,
+        recipient_id: SUPER_DATA.dietitian_information.id,
     };
 
     let apiUrl = `http://127.0.0.1:8000/api/chat`;
@@ -75,6 +75,7 @@ sendMessageBtn.addEventListener("click", function (e) {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(data),
     })
@@ -82,7 +83,6 @@ sendMessageBtn.addEventListener("click", function (e) {
         .then((response) => response.json())
         // successs
         .then((data) => {
-            console.log(data);
             if (data) {
                 messageInput.value = "";
                 sendMessageBtn.disabled = false;
@@ -147,7 +147,6 @@ finalAppointmentBtn.addEventListener("click", function (event) {
     data.appointment_information = {
         appointment_date: form.querySelector("input[name='appointment_date']")
             .value,
-        patient_id: 1,
     };
     data.personal_information = {
         first_name: form.querySelector("input[name='first_name']").value,
@@ -200,6 +199,7 @@ finalAppointmentBtn.addEventListener("click", function (event) {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(data),
     })
@@ -330,6 +330,7 @@ if (appointmentId > 0) {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(data),
     })
@@ -344,6 +345,7 @@ if (appointmentId > 0) {
             SUPER_DATA.consultation_information = data.consultation_information;
             SUPER_DATA.health_information = data.health_information;
             SUPER_DATA.nutrition_information = data.nutrition_information;
+            SUPER_DATA.dietitian_information = data.dietitian_information;
 
             SUPER_DATA.appointment_information = {
                 appointment_id: data.id,

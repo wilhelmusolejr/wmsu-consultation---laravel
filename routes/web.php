@@ -1,10 +1,14 @@
 <?php
 
+use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    $user = Auth::user();
+    return view('welcome', compact('user'));
 })->name('home');
 
 Route::get('/consultation', function () {
@@ -15,6 +19,11 @@ Route::get('/consultation/{id}', function ($id) {
     return view('consultation', compact('id'));
 });
 
+Route::get('/my-consultation', function() {
+    return view("my-consultation");
+});
+
+
 // DIETITIAN
 Route::get('/dietitian/consultation', function () {
     return view('dietitian.consultation');
@@ -22,6 +31,10 @@ Route::get('/dietitian/consultation', function () {
 
 Route::get('/dietitian/consultation/{id}', function ($id) {
     return view('dietitian.consultation', compact('id')); // Dietitian view with ID
+});
+
+Route::get('/my-pending-consultation', function() {
+    return view('dietitian.my-pending-consultation');
 });
 
 Route::get('/dashboard', function () {

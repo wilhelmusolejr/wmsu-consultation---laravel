@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Chat;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ChatController extends Controller
 {
@@ -17,9 +18,18 @@ class ChatController extends Controller
     // Store a new chat message
     public function store(Request $request)
     {
+
+        $user = Auth::user();
+
+        if (!$user) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
+        $patient_id = $user -> id;
+
         $chat = Chat::create([
             'appointment_id' => $request['appointment_id'],
-            'sender_id' => $request['sender_id'],
+            'sender_id' => $patient_id,
             'recipient_id' => $request['recipient_id'],
             'message_content' => $request['message_content'],
         ]);

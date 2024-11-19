@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('appointment_id')->constrained('appointments')->onDelete('cascade');
             $table->string("first_name");
             $table->string("last_name");
-            $table->dateTime('birthdate');
+            $table->date('birthdate');
             $table->string("gender");
             $table->timestamps();
         });

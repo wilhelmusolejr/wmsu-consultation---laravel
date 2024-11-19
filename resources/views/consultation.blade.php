@@ -16,6 +16,7 @@
 
     {{-- script --}}
     @vite(['resources/js/app.js'])
+    @vite(['resources/js/consultation.js'])
 </head>
 
 <body>

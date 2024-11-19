@@ -10,6 +10,8 @@ class ScheduleController extends Controller
 {
     public function index($id)
     {
+        return response()->json(['message' => 'No schedules found for the specified appointment'], 404);
+
         // Find all schedules with the given appointment_id
         $schedules = Schedule::where('appointment_id', $id)->get();
 

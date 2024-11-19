@@ -15,6 +15,7 @@
     <script src="https://kit.fontawesome.com/6b2bcc8033.js" crossorigin="anonymous"></script>
 
     {{-- script --}}
+    @vite(['resources/js/app.js'])
     @vite(['resources/js/dietitian/consultation.js'])
 </head>
 

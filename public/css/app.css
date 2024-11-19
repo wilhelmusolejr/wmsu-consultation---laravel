@@ -45,6 +45,10 @@ img {
     right: 20px;
 }
 
+.halfscreen {
+    min-height: 50vh !important;
+}
+
 .background-modal {
     background: rgba(0, 0, 0, 0.8);
 }
