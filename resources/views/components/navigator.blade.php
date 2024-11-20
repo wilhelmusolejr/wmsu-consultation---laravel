@@ -7,7 +7,7 @@
                     class="{{ request()->routeIs('home') ? 'font-semibold text-black' : '' }}">Home</a></li>
             <li><a href="{{ route('navigator') }}"
                     class="{{ request()->routeIs('navigator') ? 'font-semibold text-black' : '' }}">Consultation</a></li>
-            <li><a href="#"
+            <li><a href="{{ route('instructors') }}"
                     class="{{ request()->routeIs('instructors') ? 'font-semibold text-black' : '' }}">Instructors</a>
             </li>
             <li><a href="#" class="{{ request()->routeIs('tools') ? 'font-semibold text-black' : '' }}">Tools</a>

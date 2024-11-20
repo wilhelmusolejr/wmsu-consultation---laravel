@@ -346,9 +346,9 @@
                             upcoming schedule</h2>
                         <div class="schedule-container">
                             {{-- item --}}
-                            <div class="flex flex-wrap items-center justify-around py-5 bg-green-100">
+                            <div class="flex-wrap items-center justify-around hidden py-5 bg-green-100 ">
                                 <p>11/11/24</p>
-                                <p>1 hour left</p>
+                                <p>04:30pm</p>
                             </div>
                         </div>
 

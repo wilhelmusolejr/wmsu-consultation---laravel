@@ -80,3 +80,27 @@ input {
 .disabled-input {
     background: #efefef;
 }
+
+/* .... */
+.modal-1 {
+    min-height: 100vh;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+}
+.modal-1 .modal-container {
+    width: 80%;
+    height: 80vh;
+    /* max-container: 85vh; */
+    overflow-y: auto;
+}
+
+.declined {
+    color: red;
+}
+.approved {
+    color: green;
+}
+.pending {
+    color: #ba8e23;
+}

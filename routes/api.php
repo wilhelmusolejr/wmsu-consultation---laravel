@@ -19,7 +19,7 @@ Route::post("/all-pending-appointment", [AppointmentController::class, 'allAppoi
 Route::patch('/consultation/{id}', [AppointmentController::class, 'update']);
 
 Route::post('/schedule', [ScheduleController::class, 'store']);
-Route::post('/schedule/{id}', [ScheduleController::class, 'index']);
+Route::post('/schedule/{id}', [ScheduleController::class, 'index'])->middleware('auth:sanctum');
 
 Route::post('/chat', [ChatController::class, 'store'])->middleware('auth:sanctum');
 Route::post('/chat/{id}', [ChatController::class, 'index']);

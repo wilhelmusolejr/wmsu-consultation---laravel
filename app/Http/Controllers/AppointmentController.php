@@ -120,22 +120,32 @@ class AppointmentController extends Controller
         } else {
             $appointments = Appointment::where('dietitian_id', $user_id)
             ->where('status', 'approved') // Add this line to filter by status
-            ->with(['consultationInformation', 'dietitianInformation'])
+            ->with(['consultationInformation', 'dietitianInformation', 'personalInformation'])
             ->get();
         }
 
         $data = $appointments->map(function ($appointment) {
             $consultationInfo = $appointment->consultationInformation;
             $dietitianInfo = $appointment->dietitianInformation;
+            $personalInfo = $appointment->personalInformation;
+
+            // Determine dietitian name
+            $dietitian_name = "Pending";
+            if ($dietitianInfo) {
+                $dietitian_name = $dietitianInfo->first_name . " " . $dietitianInfo->last_name;
+            }
 
             return [
                 'appointment_id' => $appointment->id,
-                'chief_complaint' => $consultationInfo->chief_complaint ?? 'N/A',
-                'dietitian_name' => $dietitianInfo->name ?? 'Unassigned',
-                'consultation_status' => ucfirst($consultationInfo->status ?? 'pending'),
-                'consultation_result' => $consultationInfo->consultation_result ?? 'N/A',
+                'chief_complaint' => $consultationInfo->chief_complaint ?? 'N/A', // Handle missing consultation info
+                'dietitian_name' => $dietitian_name,
+                'personal_information' => $personalInfo,
+                'appointment_date' => \Carbon\Carbon::parse($appointment->appointment_date)->format('M d, Y'),
+                'consultation_status' => ucfirst($appointment->status ?? 'pending'),
+                'consultation_result' => $consultationInfo->consultation_result ?? 'N/A', // Handle missing consultation result
             ];
         });
+
 
         return response()->json(['appointments' => $data, 'user' => $user->type], 200);
     }

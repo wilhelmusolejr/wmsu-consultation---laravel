@@ -1,8 +1,6 @@
 let table = document.querySelector("table");
 const token = localStorage.getItem("api_token");
 
-console.log("as");
-
 table.addEventListener("click", function (e) {
     // approve btn
     if (e.target.classList.contains("approve-btn")) {
@@ -92,10 +90,10 @@ fetch(apiUrl, {
             }consultation/${appointment["appointment_id"]}`;
 
             let template = ` <tr class=" appointment" data-id="${appointment["appointment_id"]}">
+            <td class="px-4 py-2 border-b">${appointment["appointment_date"]}</td>
+            <td class="px-4 py-2 border-b">${appointment["chief_complaint"]}</td>
                                 <td class="px-4 py-2 border-b">${appointment["age"]}</td>
                                 <td class="px-4 py-2 capitalize border-b">${appointment["gender"]}</td>
-                                <td class="px-4 py-2 border-b">${appointment["chief_complaint"]}</td>
-                                <td class="px-4 py-2 border-b">${appointment["appointment_date"]}</td>
                                 <td class="flex items-center justify-center gap-5 px-4 py-2 border-b">
                                     <div
                                         class="px-5 py-2 text-white bg-green-500 rounded-md cursor-pointer approve-btn">

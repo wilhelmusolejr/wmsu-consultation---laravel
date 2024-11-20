@@ -1,8 +1,6 @@
 const apiUrl = "http://127.0.0.1:8000/api/appointment";
 const token = localStorage.getItem("api_token");
 
-console.log(token);
-
 // VARIABLES
 let countdown = 1;
 let currentStep = 2;
@@ -84,7 +82,6 @@ sendMessageBtn.addEventListener("click", function (e) {
         .then((response) => response.json())
         // successs
         .then((data) => {
-            console.log(data);
             if (data) {
                 messageInput.value = "";
                 sendMessageBtn.disabled = false;
@@ -205,7 +202,6 @@ finalEndConsultationBtn.addEventListener("click", function (event) {
         .then((response) => response.json())
         // successs
         .then((data) => {
-            console.log(data);
             currentStep = 4;
             change_step(currentStep, progress, SUPER_DATA);
         })
@@ -485,6 +481,7 @@ function step_three(progress, data) {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify(data),
         })
@@ -493,8 +490,6 @@ function step_three(progress, data) {
             // successs
             .then((data) => {
                 if (data.length != previous_data) {
-                    console.log(data);
-
                     previous_data = data.length;
                     let messageWhole = "";
 
@@ -537,28 +532,152 @@ function step_three(progress, data) {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(data),
     })
         // Parse JSON response
         .then((response) => response.json())
         .then((data) => {
-            console.log(data);
-
             let markUp = "";
 
-            data.schedules.forEach((schedule) => {
-                markUp += `<div class="flex border-b flex-wrap items-center justify-around py-5 bg-green-100">
-                                <p>${schedule.formatted_date}</p>
-                                <p>${schedule.formatted_time}</p>
-                            </div>`;
-            });
+            if (data?.message) {
+                markUp = `<p class="text-center">${data.message}</p>`;
+            } else {
+                data.schedules.forEach((schedule) => {
+                    markUp += `<div class="flex border-b flex-wrap items-center justify-around py-5 bg-green-100">
+                                    <p>${schedule.formatted_date}</p>
+                                    <p>${schedule.formatted_time}</p>
+                                </div>`;
+                });
+            }
 
             progress.querySelector(".schedule-container").innerHTML = markUp;
         })
         .catch((error) => {
             console.error("Error:", error);
         });
+
+    let personDataModal = document.querySelector(".modal-client-information");
+
+    let first_name = personDataModal.querySelector("input[name='first_name']");
+    first_name.value = `${data.personal_information.first_name}`;
+    disable_input(first_name);
+
+    let last_name = personDataModal.querySelector("input[name='last_name']");
+    last_name.value = `${data.personal_information.last_name}`;
+    disable_input(last_name);
+
+    let birthdate = personDataModal.querySelector("input[name='birthdate']");
+    birthdate.value = `${data.personal_information.birthdate}`;
+    disable_input(birthdate);
+
+    let gender = personDataModal.querySelector("select[name='consult_gender']");
+    setOptionValue(gender, data.personal_information.gender);
+    disable_input(gender);
+
+    //
+    let phone_number = personDataModal.querySelector(
+        "input[name='phone_numer']"
+    );
+    phone_number.value = `${data.contact_information.phone_number}`;
+    disable_input(phone_number);
+
+    let email = personDataModal.querySelector("input[name='email']");
+    email.value = `${data.contact_information.email}`;
+    disable_input(email);
+
+    //
+    let chief_complaint_modal = personDataModal.querySelector(
+        "input[name='chief_complain']"
+    );
+    chief_complaint_modal.value = `${data.consultation_information.chief_complaint}`;
+    disable_input(chief_complaint_modal);
+
+    let appointment_date = personDataModal.querySelector(
+        "input[name='appointment_date']"
+    );
+    appointment_date.value = `${data.appointment_information.appointment_date}`;
+    disable_input(appointment_date);
+
+    //
+    let height = personDataModal.querySelector("input[name='height']");
+    height.value = `${data.health_information.height}`;
+    disable_input(height);
+
+    let weight = personDataModal.querySelector("input[name='weight']");
+    weight.value = `${data.health_information.weight}`;
+    disable_input(weight);
+
+    let weight_changed_past_year = personDataModal.querySelector(
+        "select[name='consult_weight_changed_past_year']"
+    );
+    setOptionValue(
+        weight_changed_past_year,
+        data.health_information.weight_changed_past_year
+    );
+    disable_input(weight_changed_past_year);
+
+    let exercise = personDataModal.querySelector(
+        "select[name='consult_exercise']"
+    );
+    setOptionValue(exercise, data.health_information.exercise);
+    disable_input(exercise);
+
+    let medical_reason = personDataModal.querySelector(
+        "select[name='consult_medical_reason']"
+    );
+    setOptionValue(medical_reason, data.health_information.medical_reason);
+    disable_input(medical_reason);
+
+    let stress_level = personDataModal.querySelector(
+        "select[name='consult_stress_level']"
+    );
+    setOptionValue(stress_level, data.health_information.stress_level);
+    disable_input(stress_level);
+
+    //
+    let meet_past_dietitian = personDataModal.querySelector(
+        "select[name='consult_meet_past_dietician']"
+    );
+    setOptionValue(
+        meet_past_dietitian,
+        data.nutrition_information.meet_past_dietitian
+    );
+    disable_input(meet_past_dietitian);
+
+    let skip_meals = personDataModal.querySelector(
+        "select[name='consult_skip_meals']"
+    );
+    setOptionValue(skip_meals, data.nutrition_information.skip_meals);
+    disable_input(skip_meals);
+
+    let who_prepare_meal = personDataModal.querySelector(
+        "select[name='consult_who_prepare_meal']"
+    );
+    setOptionValue(
+        who_prepare_meal,
+        data.nutrition_information.who_prepare_meal
+    );
+    disable_input(who_prepare_meal);
+
+    let who_grocery = personDataModal.querySelector(
+        "select[name='consult_who_grocery']"
+    );
+    setOptionValue(who_grocery, data.nutrition_information.who_grocery);
+    disable_input(who_grocery);
+
+    let special_diet = personDataModal.querySelector(
+        "select[name='consult_special_diet']"
+    );
+    setOptionValue(special_diet, data.nutrition_information.special_diet);
+    disable_input(special_diet);
+
+    let food_preference = personDataModal.querySelector(
+        "input[name='food_preference']"
+    );
+    food_preference.value = `${data.nutrition_information.food_preference}`;
+    disable_input(food_preference);
 }
 
 function step_four(progress, data) {
@@ -646,6 +765,8 @@ addScheduleFinalBtn.addEventListener("click", function () {
         schedule_date: `${date.value} ${time.value}`,
     };
 
+    console.log(data);
+
     let apiUrl = `http://127.0.0.1:8000/api/schedule`;
 
     fetch(apiUrl, {
@@ -662,6 +783,7 @@ addScheduleFinalBtn.addEventListener("click", function () {
             date.value = "";
             time.value = "";
             addScheduleModal.classList.add("hidden");
+            window.location.reload();
         })
         .catch((error) => {
             console.error("Error:", error);
@@ -677,5 +799,22 @@ addScheduleModal.addEventListener("click", function (e) {
         e.target.classList.contains("modal")
     ) {
         addScheduleModal.classList.add("hidden");
+    }
+});
+
+let clientInformationBtn = document.querySelector(".client-information-btn");
+let clientInformationModal = document.querySelector(
+    ".modal-client-information"
+);
+
+clientInformationBtn.addEventListener("click", function (e) {
+    clientInformationModal.classList.remove("hidden");
+});
+
+clientInformationModal.addEventListener("click", function (e) {
+    console.log(e.target);
+
+    if (e.target.classList.contains("background-modal")) {
+        clientInformationModal.classList.add("hidden");
     }
 });

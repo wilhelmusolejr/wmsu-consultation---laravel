@@ -52,16 +52,16 @@
                     <!-- Table Header -->
                     <thead class="bg-gray-100">
                         <tr>
+                            <th class="px-4 py-2 border-b">Appointment Date</th>
+                            <th class="px-4 py-2 border-b">Chief Complaint</th>
                             <th class="px-4 py-2 border-b">Age</th>
                             <th class="px-4 py-2 border-b">Gender</th>
-                            <th class="px-4 py-2 border-b">Chief Complaint</th>
-                            <th class="px-4 py-2 border-b">Appointment Date</th>
                             <th class="px-4 py-2 border-b">Appointment Option</th>
                         </tr>
                     </thead>
 
                     <!-- Table Body -->
-                    <tbody>
+                    <tbody class="text-center capitalize">
                         <!-- Example Row -->
                         {{-- @foreach ($appointments as $appointment)
                             <tr class=" appointment" data-id="{{ $appointment['appointment_id'] }}">

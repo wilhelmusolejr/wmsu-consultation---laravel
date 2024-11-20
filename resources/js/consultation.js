@@ -634,6 +634,7 @@ function step_three(progress, data) {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(data),
     })
@@ -642,12 +643,16 @@ function step_three(progress, data) {
         .then((data) => {
             let markUp = "";
 
-            data.schedules.forEach((schedule) => {
-                markUp += `<div class="flex flex-wrap items-center justify-around py-5 bg-green-100">
-                                <p>${schedule.formatted_date}</p>
-                                <p>${schedule.formatted_time}</p>
-                            </div>`;
-            });
+            if (data?.message) {
+                markUp = `<p class="text-center">${data.message}</p>`;
+            } else {
+                data.schedules.forEach((schedule) => {
+                    markUp += `<div class="flex border-b flex-wrap items-center justify-around py-5 bg-green-100">
+                                    <p>${schedule.formatted_date}</p>
+                                    <p>${schedule.formatted_time}</p>
+                                </div>`;
+                });
+            }
 
             progress.querySelector(".schedule-container").innerHTML = markUp;
         })

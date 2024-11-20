@@ -23,6 +23,9 @@ Route::get('/my-consultation', function() {
     return view("my-consultation");
 });
 
+Route::get('/instructors', function() {
+    return view("instructor");
+})->name('instructors');
 
 // DIETITIAN
 Route::get('/dietitian/consultation', function () {

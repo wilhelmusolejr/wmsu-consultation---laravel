@@ -177,7 +177,6 @@
         </div>
     </div>
 
-
     {{-- Modal for Confirming End of Consultation --}}
     <x-modal class="modal-end-consultation">
         {{-- Header --}}
@@ -250,6 +249,199 @@
         </x-modal-footer>
     </x-modal>
 
+    {{-- modal --}}
+    <div class="flex items-center justify-center hidden modal-1 background-modal modal-client-information">
+        <div class="p-5 bg-white border rounded-md modal-container">
+
+            <x-modal-header>Client information</x-modal-header>
+
+
+            {{-- Personal Information --}}
+            <div class="flex flex-wrap justify-center w-full gap-10 ">
+                {{-- Personal Information --}}
+                <div class="flex flex-wrap items-start justify-center w-full gap-5 mb-10 ">
+                    <h3 class="w-full mt-5 mb-2 text-xl font-medium md:w-1/3">Personal Information</h3>
+                    <h3 class="hidden w-1/3 md:block"></h3>
+
+                    {{-- firstname --}}
+                    <div class="w-full md:w-1/3">
+                        <x-input type="text" name="first_name" label="First name" required />
+                    </div>
+
+                    {{-- lastname --}}
+                    <div class="w-full md:w-1/3">
+                        <x-input type="text" name="last_name" label="Last name" required />
+                    </div>
+
+                    {{-- birthdate --}}
+                    <div class="w-full md:w-1/3">
+                        <x-input type="date" name="birthdate" label="Birthdate" required />
+                    </div>
+
+                    {{-- gender --}}
+                    <div class="flex flex-col w-full gap-1 md:w-1/3">
+                        <x-input-option name="consult_gender" label="Gender" required>
+                            <option value="male">male</option>
+                            <option value="female">female</option>
+                        </x-input-option>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Contact Information --}}
+            <div class="flex flex-wrap justify-center w-full gap-10 ">
+                <div class="flex flex-wrap items-start justify-center w-full gap-5 mb-10 ">
+                    <h3 class="w-full mt-5 mb-2 text-xl font-medium md:w-1/3">Contact Information</h3>
+                    <h3 class="hidden w-1/3 md:block"></h3>
+
+                    {{-- phone number --}}
+                    <div class="w-full md:w-1/3">
+                        <x-input type="number" name="phone_numer" label="Phone number" required />
+                    </div>
+
+                    {{-- email --}}
+                    <div class="w-full md:w-1/3">
+                        <x-input type="email" name="email" label="Email" required />
+                    </div>
+                </div>
+            </div>
+
+            {{-- Consultation Information --}}
+            <div class="flex flex-wrap justify-center w-full gap-10 ">
+                {{-- Consultation Information --}}
+                <div class="flex flex-wrap items-start justify-center w-full gap-5 mb-10 ">
+                    <h3 class="w-full mt-5 mb-2 text-xl font-medium md:w-1/3">Consultation Information</h3>
+                    <h3 class="hidden w-1/3 md:block"></h3>
+
+                    {{-- Complain --}}
+                    <div class="w-full md:w-1/3">
+                        <x-input type="text" name="chief_complain" label="Chief Complaint" required />
+                    </div>
+
+                    {{-- Referral Form --}}
+                    <div class="w-full md:w-1/3">
+                        <x-input type="file" name="referral_form" label="Referal Form" />
+                    </div>
+
+                    {{-- appointment date --}}
+                    <div class="w-full md:w-1/3">
+                        <x-input type="date" name="appointment_date" label="Appointment Date" required />
+                    </div>
+                    <h3 class="hidden w-1/3 md:block"></h3>
+                </div>
+            </div>
+
+            {{-- Health Information --}}
+            <div class="flex flex-wrap justify-center gap-10 ">
+                <div class="flex flex-wrap items-start justify-center gap-5 mb-10 ">
+                    <h3 class="w-full mt-5 mb-2 text-xl font-medium md:w-1/3">Health Information</h3>
+                    <h3 class="hidden w-1/3 md:block"></h3>
+
+                    {{-- Height --}}
+                    <div class="w-full md:w-1/3">
+                        <x-input type="text" name="height" label="Height" required />
+                    </div>
+
+                    {{-- Weight --}}
+                    <div class="w-full md:w-1/3">
+                        <x-input type="text" name="weight" label="Weight" required />
+                    </div>
+
+                    {{-- Has your weight changed in the past year? --}}
+                    <div class="flex flex-col w-full gap-1 md:w-1/3">
+                        <x-input-option name="consult_weight_changed_past_year"
+                            label="Has your weight changed in the past year?" required>
+                            <option value="yes">yes</option>
+                            <option value="no">no</option>
+                        </x-input-option>
+                    </div>
+
+                    {{-- Do you exercise? --}}
+                    <div class="flex flex-col w-full gap-1 md:w-1/3">
+                        <x-input-option name="consult_exercise" label="Do you exercise?" required>
+                            <option value="yes">yes</option>
+                            <option value="no">no</option>
+                        </x-input-option>
+                    </div>
+
+                    {{-- Are there any medical reasons why you cannot exercise? --}}
+                    <div class="flex flex-col w-full gap-1 md:w-1/3">
+                        <x-input-option name="consult_medical_reason"
+                            label="Are there any medical reasons why you cannot exercise?" required>
+                            <option value="yes">yes</option>
+                            <option value="no">no</option>
+                        </x-input-option>
+                    </div>
+
+                    {{-- Stress Level --}}
+                    <div class="flex flex-col w-full gap-1 md:w-1/3">
+                        <x-input-option name="consult_stress_level" label="Stress Level">
+                            <option value="low">low</option>
+                            <option value="balanced">balanced</option>
+                            <option value="high">high</option>
+                        </x-input-option>
+                    </div>
+
+                </div>
+            </div>
+
+            {{-- Nutrition Information --}}
+            <div class="flex flex-wrap justify-center gap-10 ">
+                <div class="flex flex-wrap items-start justify-center gap-5 mb-10 ">
+                    <h3 class="w-full mt-5 mb-2 text-xl font-medium md:w-1/3">Nutrional Information</h3>
+                    <h3 class="hidden w-1/3 md:block"></h3>
+
+                    {{-- Have you met with a registered dietitian in the past? --}}
+                    <div class="flex flex-col w-full gap-1 md:w-1/3">
+                        <x-input-option name="consult_meet_past_dietician"
+                            label="Have you met with a registered dietitian in the past?" required>
+                            <option value="yes">yes</option>
+                            <option value="no">no</option>
+                        </x-input-option>
+                    </div>
+
+                    {{-- Do you follow a special diet or eating style --}}
+                    <div class="flex flex-col w-full gap-1 md:w-1/3">
+                        <x-input-option name="consult_special_diet"
+                            label="Do you follow a special diet or eating style?" required>
+                            <option value="yes">yes</option>
+                            <option value="no">no</option>
+                        </x-input-option>
+                    </div>
+
+                    {{-- Food preferences --}}
+                    <div class="w-full md:w-1/3">
+                        <x-input type="text" name="food_preference" label="Any food preferences" required />
+                    </div>
+
+                    {{-- Who does your grocery shopping? --}}
+                    <div class="flex flex-col w-full gap-1 md:w-1/3">
+                        <x-input-option name="consult_who_grocery" label="Who does your grocery shopping?">
+                            <option value="Myself">Myself</option>
+                            <option value="others">Others</option>
+                        </x-input-option>
+                    </div>
+
+                    {{-- Who prepares your meals? --}}
+                    <div class="flex flex-col w-full gap-1 md:w-1/3">
+                        <x-input-option name="consult_who_prepare_meal" label="Who prepares your meals?">
+                            <option value="Myself">Myself</option>
+                            <option value="others">Others</option>
+                        </x-input-option>
+                    </div>
+
+                    {{-- Do you ever skip meals? --}}
+                    <div class="flex flex-col w-full gap-1 md:w-1/3">
+                        <x-input-option name="consult_skip_meals" label="Do you ever skip meals?">
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </x-input-option>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
 
     <br>
     <br>

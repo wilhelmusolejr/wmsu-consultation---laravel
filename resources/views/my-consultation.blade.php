@@ -52,17 +52,11 @@
                 <table class="min-w-full bg-white border border-gray-200">
                     <!-- Table Header -->
                     <thead class="bg-gray-100">
-                        <tr>
-                            <th class="px-4 py-2 border-b">ID</th>
-                            <th class="px-4 py-2 border-b">Chief Complaint</th>
-                            <th class="px-4 py-2 border-b">RND Name</th>
-                            <th class="px-4 py-2 border-b">Consultation Status</th>
-                            <th class="px-4 py-2 border-b">Consultation Result</th>
-                        </tr>
+
                     </thead>
 
                     <!-- Table Body -->
-                    <tbody>
+                    <tbody class="text-center capitalize">
 
                     </tbody>
                 </table>
