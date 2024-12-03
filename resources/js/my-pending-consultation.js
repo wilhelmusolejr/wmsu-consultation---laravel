@@ -1,12 +1,10 @@
-const token = localStorage.getItem("api_token");
+const APP_URL = `http://127.0.0.1:8000`;
+const API_URL_API = `${APP_URL}/api`;
 
+const token = localStorage.getItem("api_token");
 const table = document.querySelector("table");
 
-let apiUrl = `http://127.0.0.1:8000/api/all-pending-appointment`;
-
-console.log("as");
-
-fetch(apiUrl, {
+fetch(`${API_URL_API}/all-pending-appointment`, {
     method: "POST",
     headers: {
         "Content-Type": "application/json",
@@ -22,7 +20,7 @@ fetch(apiUrl, {
         let markUp = "";
 
         data.appointments.forEach((appointment) => {
-            let link = `http://127.0.0.1:8000/${
+            let link = `${APP_URL}/${
                 data.user === "patient" ? "" : "dietitian/"
             }consultation/${appointment["appointment_id"]}`;
 

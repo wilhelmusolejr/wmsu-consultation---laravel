@@ -1,10 +1,10 @@
-const token = localStorage.getItem("api_token");
+const APP_URL = `http://127.0.0.1:8000`;
+const API_URL_API = `${APP_URL}/api`;
 
+const token = localStorage.getItem("api_token");
 const table = document.querySelector("table");
 
-let apiUrl = `http://127.0.0.1:8000/api/all-appointment`;
-
-fetch(apiUrl, {
+fetch(`${API_URL_API}/all-appointment`, {
     method: "POST",
     headers: {
         "Content-Type": "application/json",
@@ -15,8 +15,6 @@ fetch(apiUrl, {
     .then((response) => response.json())
     // successs
     .then((data) => {
-        console.log(data);
-
         let markUp = "";
         let tableHead = "";
 
@@ -32,7 +30,7 @@ fetch(apiUrl, {
                 `;
 
             data.appointments.forEach((appointment) => {
-                let link = `http://127.0.0.1:8000/${
+                let link = `${APP_URL}/${
                     data.user === "patient" ? "" : "dietitian/"
                 }consultation/${appointment["appointment_id"]}`;
 
@@ -77,7 +75,7 @@ fetch(apiUrl, {
                 `;
 
             data.appointments.forEach((appointment) => {
-                let link = `http://127.0.0.1:8000/${
+                let link = `${APP_URL}/${
                     data.user === "patient" ? "" : "dietitian/"
                 }consultation/${appointment["appointment_id"]}`;
 

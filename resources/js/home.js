@@ -1,4 +1,5 @@
-const apiUrl = "http://127.0.0.1:8000/api";
+const APP_URL = `http://127.0.0.1:8000`;
+const API_URL_API = `${APP_URL}/api`;
 
 const token = localStorage.getItem("api_token");
 
@@ -44,7 +45,7 @@ registerFormBtn?.addEventListener("click", function (e) {
         password: registerModal.querySelector("input[name='password']").value,
     };
 
-    fetch(`${apiUrl}/register`, {
+    fetch(`${API_URL_API}/register`, {
         method: "POST",
         credentials: "include",
         headers: {
@@ -72,7 +73,7 @@ loginFormBtn?.addEventListener("click", function (e) {
         password: loginModal.querySelector("input[name='password']").value,
     };
 
-    fetch(`${apiUrl}/login`, {
+    fetch(`${API_URL_API}/login`, {
         method: "POST",
         credentials: "include",
         headers: {
@@ -95,7 +96,7 @@ loginFormBtn?.addEventListener("click", function (e) {
 logoutBtn?.addEventListener("click", function (e) {
     e.preventDefault();
 
-    fetch(`${apiUrl}/logout`, {
+    fetch(`${API_URL_API}/logout`, {
         method: "POST",
         credentials: "include",
         headers: {
@@ -137,7 +138,7 @@ let userParent = document.querySelector(".authenticated-parent");
 let guestParent = document.querySelector(".guest-parent");
 
 if (token) {
-    fetch(`${apiUrl}/userinfo`, {
+    fetch(`${API_URL_API}/userinfo`, {
         method: "POST",
         credentials: "include",
         headers: {

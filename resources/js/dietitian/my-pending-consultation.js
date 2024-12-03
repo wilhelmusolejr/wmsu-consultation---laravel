@@ -1,3 +1,6 @@
+const APP_URL = `http://127.0.0.1:8000`;
+const API_URL_API = `${APP_URL}/api`;
+
 let table = document.querySelector("table");
 const token = localStorage.getItem("api_token");
 
@@ -13,9 +16,7 @@ table.addEventListener("click", function (e) {
             id: id,
         };
 
-        let apiUrl = `http://127.0.0.1:8000/api/appointment/${id}`;
-
-        fetch(apiUrl, {
+        fetch(`${API_URL_API}/appointment/${id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
@@ -28,7 +29,7 @@ table.addEventListener("click", function (e) {
             // successs
             .then((data) => {
                 console.log(data);
-                window.location = `http://127.0.0.1:8000/dietitian/consultation/${id}`;
+                window.location = `${APP_URL}/dietitian/consultation/${id}`;
             })
             .catch((error) => {
                 console.error("Error:", error);
@@ -45,9 +46,7 @@ table.addEventListener("click", function (e) {
             id: id,
         };
 
-        let apiUrl = `http://127.0.0.1:8000/api/appointment/${id}`;
-
-        fetch(apiUrl, {
+        fetch(`${API_URL_API}/appointment/${id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
@@ -67,9 +66,7 @@ table.addEventListener("click", function (e) {
     }
 });
 
-let apiUrl = `http://127.0.0.1:8000/api/all-pending-appointment`;
-
-fetch(apiUrl, {
+fetch(`${API_URL_API}/all-pending-appointment`, {
     method: "POST",
     headers: {
         "Content-Type": "application/json",
@@ -85,7 +82,7 @@ fetch(apiUrl, {
         let markUp = "";
 
         data.appointments.forEach((appointment) => {
-            let link = `http://127.0.0.1:8000/${
+            let link = `${APP_URL}/${
                 data.user === "patient" ? "" : "dietitian/"
             }consultation/${appointment["appointment_id"]}`;
 
