@@ -119,7 +119,16 @@
 
                 {{-- grid 3 --}}
                 <div class="w-full lg:w-1/4 md:w-1/2 ">
-                    <x-instructor-card image="{{ asset('images/doctor.png') }}" name="Gregory Yames" patients="8" />
+                    <div class="p-5 bg-white border rounded-md shadow-md lg:p-7 max-w-80 md:max-w-none">
+                        <div class="relative flex items-center justify-center p-5 pb-0 bg-blue-200 border rounded-md">
+                            <img src="{{ asset('images/blank_profile.png') }}" alt="Doctor" class="">
+                        </div>
+                        <div class="pb-2 text-center pt-7">
+                            <h3 class="font-medium lg:text-xl name">Rnd. Gregory Yames</h3>
+                        </div>
+                    </div>
+
+
                 </div>
             </div>
 

@@ -5,7 +5,6 @@ const token = localStorage.getItem("api_token");
 let countdown = 1;
 let currentStep = 2;
 let currentUser = "patient";
-let currentId = 1;
 
 // DATA
 let SUPER_DATA = {
@@ -207,58 +206,70 @@ finalAppointmentBtn.addEventListener("click", function (event) {
         .then((response) => response.json())
         // successs
         .then((data) => {
-            currentStep = data.appointment_information.step;
+            console.log(data);
 
-            SUPER_DATA.appointment_information = {
-                appointment_id: data.appointment_information.id,
-                appointment_date: new Date(
-                    data.appointment_information.appointment_date
-                )
-                    .toISOString()
-                    .split("T")[0],
-                appointment_status: data.appointment_information.status,
-                appointment_step: data.appointment_information.step,
-            };
-            SUPER_DATA.personal_information = data.personal_information;
-            SUPER_DATA.contact_information = data.contact_information;
-            SUPER_DATA.consultation_information = data.consultation_information;
-            SUPER_DATA.health_information = data.health_information;
-            SUPER_DATA.nutrition_information = data.nutrition_information;
+            if (data.success) {
+                let data = data.data;
 
-            // add green bg
-            submitAppointmentModal
-                .querySelector(".modal-container")
-                .classList.add("bg-green-100");
+                console.log(data);
 
-            // change HEADER to Success
-            submitAppointmentModal.querySelector(
-                ".modal-header h2"
-            ).textContent = "Success";
+                currentStep = data.appointment_information.step;
 
-            // Remove cancel button
-            submitAppointmentModal
-                .querySelector(".modal-close")
-                .classList.add("hidden");
+                SUPER_DATA.appointment_information = {
+                    appointment_id: data.appointment_information.id,
+                    appointment_date: new Date(
+                        data.appointment_information.appointment_date
+                    )
+                        .toISOString()
+                        .split("T")[0],
+                    appointment_status: data.appointment_information.status,
+                    appointment_step: data.appointment_information.step,
+                };
+                SUPER_DATA.personal_information = data.personal_information;
+                SUPER_DATA.contact_information = data.contact_information;
+                SUPER_DATA.consultation_information =
+                    data.consultation_information;
+                SUPER_DATA.health_information = data.health_information;
+                SUPER_DATA.nutrition_information = data.nutrition_information;
 
-            // Change DESCRIPTION
-            submitAppointmentModal.querySelector(
-                ".modal-body .modal-info"
-            ).textContent = "Your appointment has been submitted successfully";
+                // add green bg
+                submitAppointmentModal
+                    .querySelector(".modal-container")
+                    .classList.add("bg-green-100");
 
-            // Change button to Redirecting
-            finalAppointmentBtn.textContent = "Redirecting in ...";
+                // change HEADER to Success
+                submitAppointmentModal.querySelector(
+                    ".modal-header h2"
+                ).textContent = "Success";
 
-            // Create an interval to update the button text every second
-            let interval = setInterval(() => {
-                finalAppointmentBtn.textContent = `Redirecting in ${countdown}...`;
-                countdown--;
+                // Remove cancel button
+                submitAppointmentModal
+                    .querySelector(".modal-close")
+                    .classList.add("hidden");
 
-                if (countdown < 0) {
-                    clearInterval(interval); // hide current modal submitAppointmentModal.classList.add("hidden");
-                    submitAppointmentModal.classList.add("hidden");
-                    change_step(currentStep, progress, SUPER_DATA);
-                }
-            }, 1000);
+                // Change DESCRIPTION
+                submitAppointmentModal.querySelector(
+                    ".modal-body .modal-info"
+                ).textContent =
+                    "Your appointment has been submitted successfully";
+
+                // Change button to Redirecting
+                finalAppointmentBtn.textContent = "Redirecting in ...";
+
+                // Create an interval to update the button text every second
+                let interval = setInterval(() => {
+                    finalAppointmentBtn.textContent = `Redirecting in ${countdown}...`;
+                    countdown--;
+
+                    if (countdown < 0) {
+                        clearInterval(interval); // hide current modal submitAppointmentModal.classList.add("hidden");
+                        submitAppointmentModal.classList.add("hidden");
+                        change_step(currentStep, progress, SUPER_DATA);
+                    }
+                }, 1000);
+            } else {
+                console.log(data.message);
+            }
         })
         .catch((error) => {
             console.error("Error:", error);
@@ -590,22 +601,21 @@ function step_three(progress, data) {
             // successs
             .then((data) => {
                 if (data.length != previous_data) {
-                    console.log(data);
-
                     previous_data = data.length;
                     let messageWhole = "";
 
                     data.forEach((message) => {
                         let messagerUser =
-                            message.sender_id === currentId
-                                ? "patient"
-                                : "diatetian";
+                            message.sender_id ===
+                            SUPER_DATA.dietitian_information.id
+                                ? "receiver"
+                                : "sender";
 
                         let messageTemplate = `
         <div class="${
-            messagerUser === "patient" ? "self-end" : "self-start"
+            messagerUser === "sender" ? "self-end" : "self-start"
         } w-11/12 p-2 bg-${
-                            messagerUser === "patient" ? "blue" : "gray"
+                            messagerUser === "sender" ? "blue" : "gray"
                         }-200 border rounded-md md:w-2/3">
             <p>${message.message_content}
             </p>

@@ -286,6 +286,9 @@ if (appointmentId > 0) {
                 .toISOString()
                 .split("T")[0];
 
+            SUPER_DATA.personal_information.id = data.patient_id;
+
+            console.log(data);
             console.log(SUPER_DATA);
 
             change_step(currentStep, progress, SUPER_DATA);
@@ -467,6 +470,10 @@ function step_three(progress, data) {
     chief_complaint.value = `${data.consultation_information.chief_complaint}`;
     disable_input(chief_complaint);
 
+    progress.querySelector(
+        ".name"
+    ).textContent = `${data.personal_information.first_name} ${data.personal_information.last_name}`;
+
     //
     //
     //
@@ -495,15 +502,16 @@ function step_three(progress, data) {
 
                     data.forEach((message) => {
                         let messagerUser =
-                            message.sender_id === currentId
-                                ? "patient"
-                                : "diatetian";
+                            message.sender_id ===
+                            SUPER_DATA.personal_information.id
+                                ? "receiver"
+                                : "sender";
 
                         let messageTemplate = `
         <div class="${
-            messagerUser === "patient" ? "self-end" : "self-start"
+            messagerUser === "sender" ? "self-end" : "self-start"
         } w-11/12 p-2 bg-${
-                            messagerUser === "patient" ? "blue" : "gray"
+                            messagerUser === "sender" ? "blue" : "gray"
                         }-200 border rounded-md md:w-2/3">
             <p>${message.message_content}
             </p>

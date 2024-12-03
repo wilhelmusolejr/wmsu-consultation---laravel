@@ -35,7 +35,7 @@
                 <div class="relative inline-block text-left">
                     <div>
                       <button type="button" class="w-12 h-12 border-2 border-green-500 rounded-full" id="menu-button" aria-expanded="true" aria-haspopup="true">
-                            <img src={{ asset('images/profile_picture.jpg') }} class="w-full h-full rounded-full" alt="">
+                            <img src={{ asset('images/blank_profile.png') }} class="w-full h-full rounded-full " alt="">
                       </button>
                     </div>
 
@@ -85,7 +85,7 @@
         </form>
     </x-modal-body>
 
-    <div class="mt-10"><a href="#">Register</a></div>
+    <div class="mt-10">Not a member? <a href="#" class="text-green-800 underline go-to-register">Register</a></div>
 </x-modal>
 
 {{-- REGISTER MODAL --}}
@@ -118,5 +118,5 @@
         </form>
     </x-modal-body>
 
-    <div class="mt-10"><a href="#">Login</a></div>
+    <div class="mt-10">Already a member? <a href="#" class="text-green-800 underline go-to-login">Login</a></div>
 </x-modal>

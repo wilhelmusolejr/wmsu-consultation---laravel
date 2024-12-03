@@ -49,6 +49,10 @@ img {
     min-height: 50vh !important;
 }
 
+.onethirdscreen {
+    min-height: 30vh !important;
+}
+
 .background-modal {
     background: rgba(0, 0, 0, 0.8);
 }

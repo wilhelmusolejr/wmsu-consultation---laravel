@@ -8,8 +8,13 @@ use Illuminate\Support\Facades\Auth;
 
 class AppointmentController extends Controller
 {
-    public function show($id, Request $request)
+    public function show($id)
     {
+
+        // 1. User needs to be loggedin
+        // 2. If the appointment # is valid
+        // 3. If the appointment belongs to the logged user
+
         $user = Auth::user();
 
         if (!$user) {
@@ -33,12 +38,9 @@ class AppointmentController extends Controller
 
     public function store(Request $request, PersonalInformationController $personalInfoController, HealthInformationController $healthInfoController, ContactInformationController $contactInfoController, ConsultationInformationController $consultationInfoController, NutritionInformationController $nutritionInfoController)
     {
+
         // Get the authenticated user
         $user = Auth::user();
-
-        if (!$user) {
-            return response()->json(['message' => 'Unauthorized'], 401);
-        }
 
         $appointment_info = $request->input('appointment_information');
 
@@ -57,7 +59,7 @@ class AppointmentController extends Controller
         $consultation_information = $consultationInfoController->store($appointment->id, $request->consultation_information);
         $nutrition_information = $nutritionInfoController->store($appointment->id, $request->nutrition_information);
 
-        $data = [
+        $info = [
             'appointment_information' => $appointment,
             'personal_information' => $personal_information,
             'health_information' => $health_information,
@@ -66,11 +68,22 @@ class AppointmentController extends Controller
             'nutrition_information' => $nutrition_information,
         ];
 
+        $data = [
+            'success' => true,
+            'message' => "Appointment created successfully.",
+            'data' => $info
+        ];
+
         return response()->json($data, 201);
     }
 
     public function update(Request $request, $id)
     {
+
+        // 1. User needs to be logged in
+        // 2. If appointment is valid
+        // 2. If user needs to own the appointment
+
         // Find the appointment by ID
         $appointment = Appointment::find($id);
 
@@ -105,6 +118,12 @@ class AppointmentController extends Controller
 
     public function allAppointments()
     {
+
+
+        // 1. User needs to be loggedin
+        // 2. Show only apppoinments by the logged user
+
+
         $user = Auth::user();
 
         if (!$user) {
@@ -152,6 +171,10 @@ class AppointmentController extends Controller
 
     public function allAppointmentsDietetian()
     {
+
+        // 1. User needs to be loggedin
+        // 2. Show only the appointment of the user
+
         $appointment = Appointment::where('status', 'pending')
             ->with(['consultationInformation', 'personalInformation'])
             ->get();
@@ -171,4 +194,5 @@ class AppointmentController extends Controller
 
         return response()->json(['appointments' => $data], 200);
     }
+
 }

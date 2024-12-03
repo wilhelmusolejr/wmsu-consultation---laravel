@@ -56,7 +56,6 @@ registerFormBtn?.addEventListener("click", function (e) {
         .then((response) => response.json())
         // successs
         .then((data) => {
-            console.log(data);
             localStorage.setItem("api_token", data.token);
             window.location.reload();
         })
@@ -85,7 +84,6 @@ loginFormBtn?.addEventListener("click", function (e) {
         .then((response) => response.json())
         // successs
         .then((data) => {
-            console.log(data);
             localStorage.setItem("api_token", data.token);
             window.location.reload();
         })
@@ -117,6 +115,24 @@ logoutBtn?.addEventListener("click", function (e) {
         });
 });
 
+registerModal?.addEventListener("click", function (e) {
+    e.preventDefault();
+
+    if (e.target.classList.contains("go-to-login")) {
+        registerModal.classList.toggle("hidden");
+        loginModal.classList.toggle("hidden");
+    }
+});
+
+loginModal?.addEventListener("click", function (e) {
+    e.preventDefault();
+
+    if (e.target.classList.contains("go-to-register")) {
+        registerModal.classList.toggle("hidden");
+        loginModal.classList.toggle("hidden");
+    }
+});
+
 let userParent = document.querySelector(".authenticated-parent");
 let guestParent = document.querySelector(".guest-parent");
 
@@ -138,6 +154,19 @@ if (token) {
             userParent.querySelector(
                 ".user-name"
             ).textContent = `${data.first_name} ${data.last_name}`;
+
+            console.log();
+            console.log(data);
+
+            if (data.profile === null) {
+                userParent.querySelector(
+                    "img"
+                ).src = `http://127.0.0.1:8000/images/blank_profile.png`;
+            } else {
+                userParent.querySelector(
+                    "img"
+                ).src = `http://127.0.0.1:8000/images/${data.profile}`;
+            }
 
             if (data.type === "patient") {
                 userParent

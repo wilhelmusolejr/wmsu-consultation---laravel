@@ -82,4 +82,21 @@ class UserController extends Controller
         // Return a response indicating the user has been logged out
         return response()->json(['message' => 'Logged out successfully.'], 200);
     }
+
+    public function all_diatitian()
+    {
+        $diatians = UserController::getAllDietitian();
+        return view('instructor', ['diatians' => $diatians]);
+    }
+
+    public function home() {
+        $all_diatians = UserController::getAllDietitian();
+        $diatians = array_slice($all_diatians, 0, 6);
+        return view('welcome', ['diatians' => $diatians]);
+    }
+
+    function getAllDietitian() {
+        $diatians = User::where("type", 'instructor')->get()->toArray();
+        return $diatians;
+    }
 }

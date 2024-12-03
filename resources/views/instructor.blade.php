@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Instructors | Online Consultation Clinic</title>
 
     {{-- stylesheet --}}
     @vite('resources/css/app.css')
@@ -20,7 +20,7 @@
 
 <body>
     {{-- header --}}
-    <header class="relative flex flex-col min-h-screen home-header halfscreen">
+    <header class="relative flex flex-col min-h-screen home-header onethirdscreen">
 
         {{-- banner --}}
         <x-page-banner />
@@ -40,12 +40,13 @@
             <div class="flex justify-center">
                 <div class="grid gap-5 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                     {{-- box --}}
-                    <x-instructor-card image="{{ asset('images/doctor.png') }}" name="Gregory Yames" patients="10" />
-                    <x-instructor-card image="{{ asset('images/doctor.png') }}" name="Gregory Yames" patients="6" />
-                    <x-instructor-card image="{{ asset('images/doctor.png') }}" name="Gregory Yames" patients="2" />
-                    <x-instructor-card image="{{ asset('images/doctor.png') }}" name="Gregory Yames" patients="8" />
-                    <x-instructor-card image="{{ asset('images/doctor.png') }}" name="Gregory Yames" patients="21" />
-                    <x-instructor-card image="{{ asset('images/doctor.png') }}" name="Gregory Yames" patients="2" />
+                    @foreach ($diatians as $dietian)
+                    <x-instructor-card
+                        image="{{ asset('images/' . $dietian['profile']) }}"
+                        name="{{ $dietian['first_name'] . ' ' . $dietian['last_name'] }}"
+                        patients="{{ rand(10,50) }}"
+                    />
+                    @endforeach
                 </div>
             </div>
         </div>

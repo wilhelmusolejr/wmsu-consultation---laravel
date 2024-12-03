@@ -8,7 +8,16 @@ use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::post('/appointment', [AppointmentController::class, 'store'])->middleware('auth:sanctum');
+
+// user authenticaiton
+// check if user has the right to access the appointment
+
+use App\Http\Middleware\CheckAppointmentOwnership;
+use App\Http\Middleware\AuthenticateUser;
+
+Route::post('/appointment', [AppointmentController::class, 'store']);
+
+
 Route::post('/appointment/{id}', [AppointmentController::class, 'show'])->middleware('auth:sanctum');
 Route::patch('/appointment/{id}', [AppointmentController::class, 'update'])->middleware('auth:sanctum');
 

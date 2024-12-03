@@ -6,10 +6,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    $user = Auth::user();
-    return view('welcome', compact('user'));
-})->name('home');
+Route::get('/', [UserController::class, 'home'])->name('home');
 
 Route::get('/consultation', function () {
     return view('consultation');
@@ -23,9 +20,13 @@ Route::get('/my-consultation', function() {
     return view("my-consultation");
 });
 
-Route::get('/instructors', function() {
-    return view("instructor");
-})->name('instructors');
+// Route::get('/instructors', function() {
+//     return view("instructor");
+// })->name('instructors');
+
+
+Route::get("/instructors", [UserController::class, 'all_diatitian'])->name('instructors');
+
 
 // DIETITIAN
 Route::get('/dietitian/consultation', function () {
