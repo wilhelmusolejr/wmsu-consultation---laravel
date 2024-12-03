@@ -1,4 +1,6 @@
-const apiUrl = "http://127.0.0.1:8000/api/appointment";
+const APP_URL = `http://127.0.0.1:8000`;
+const API_URL_API = `${APP_URL}/api`;
+
 const token = localStorage.getItem("api_token");
 
 // VARIABLES
@@ -68,9 +70,7 @@ sendMessageBtn.addEventListener("click", function (e) {
         recipient_id: SUPER_DATA.dietitian_information.id,
     };
 
-    let apiUrl = `http://127.0.0.1:8000/api/chat`;
-
-    fetch(apiUrl, {
+    fetch(`${API_URL_API}/chat`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -194,7 +194,7 @@ finalAppointmentBtn.addEventListener("click", function (event) {
 
     finalAppointmentBtn.textContent = "Submitting...";
 
-    fetch(apiUrl, {
+    fetch(`${API_URL_API}/appointment`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -206,31 +206,28 @@ finalAppointmentBtn.addEventListener("click", function (event) {
         .then((response) => response.json())
         // successs
         .then((data) => {
-            console.log(data);
-
             if (data.success) {
-                let data = data.data;
+                let new_data = data.data;
 
-                console.log(data);
-
-                currentStep = data.appointment_information.step;
+                currentStep = new_data.appointment_information.step;
 
                 SUPER_DATA.appointment_information = {
-                    appointment_id: data.appointment_information.id,
+                    appointment_id: new_data.appointment_information.id,
                     appointment_date: new Date(
-                        data.appointment_information.appointment_date
+                        new_data.appointment_information.appointment_date
                     )
                         .toISOString()
                         .split("T")[0],
-                    appointment_status: data.appointment_information.status,
-                    appointment_step: data.appointment_information.step,
+                    appointment_status: new_data.appointment_information.status,
+                    appointment_step: new_data.appointment_information.step,
                 };
-                SUPER_DATA.personal_information = data.personal_information;
-                SUPER_DATA.contact_information = data.contact_information;
+                SUPER_DATA.personal_information = new_data.personal_information;
+                SUPER_DATA.contact_information = new_data.contact_information;
                 SUPER_DATA.consultation_information =
-                    data.consultation_information;
-                SUPER_DATA.health_information = data.health_information;
-                SUPER_DATA.nutrition_information = data.nutrition_information;
+                    new_data.consultation_information;
+                SUPER_DATA.health_information = new_data.health_information;
+                SUPER_DATA.nutrition_information =
+                    new_data.nutrition_information;
 
                 // add green bg
                 submitAppointmentModal
@@ -335,9 +332,7 @@ if (appointmentId > 0) {
         patient_id: 1,
     };
 
-    let url = `${apiUrl}/${appointmentId}`;
-
-    fetch(url, {
+    fetch(`${API_URL_API}/appointment/${appointmentId}`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -536,8 +531,9 @@ function step_two(progress, data) {
         ).value = `${data.dietitian_information.first_name} ${data.dietitian_information.last_name}`;
     } else {
         // submitAppointmentBtn.classList.add("hidden");
-        progress.querySelector(".doctor-container img").src =
-            "http://127.0.0.1:8000/images/blank_doctor.png";
+        progress.querySelector(
+            ".doctor-container img"
+        ).src = `${APP_URL}/images/blank_doctor.png`;
 
         // remove floating
         progress
@@ -583,19 +579,21 @@ function step_three(progress, data) {
     //
     //
     //
-    let url = `http://127.0.0.1:8000/api/chat/${SUPER_DATA.appointment_information.appointment_id}`;
 
     let previous_data;
 
     // Start the interval and save its ID
     let intervalId = setInterval(function () {
-        fetch(url, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        })
+        fetch(
+            `${API_URL_API}/chat/${SUPER_DATA.appointment_information.appointment_id}`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            }
+        )
             // Parse JSON response
             .then((response) => response.json())
             // successs
@@ -638,16 +636,17 @@ function step_three(progress, data) {
         console.log("Interval cleared!");
     }, 300000);
 
-    let apiUrl = `http://127.0.0.1:8000/api/schedule/${SUPER_DATA.appointment_information.appointment_id}`;
-
-    fetch(apiUrl, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(data),
-    })
+    fetch(
+        `${API_URL_API}/schedule/${SUPER_DATA.appointment_information.appointment_id}`,
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(data),
+        }
+    )
         // Parse JSON response
         .then((response) => response.json())
         .then((data) => {

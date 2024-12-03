@@ -1,4 +1,6 @@
-const apiUrl = "http://127.0.0.1:8000/api/appointment";
+const APP_URL = `http://127.0.0.1:8000`;
+const API_URL_API = `${APP_URL}/api`;
+
 const token = localStorage.getItem("api_token");
 
 // VARIABLES
@@ -68,9 +70,7 @@ sendMessageBtn.addEventListener("click", function (e) {
         recipient_id: SUPER_DATA.personal_information.id,
     };
 
-    let apiUrl = `http://127.0.0.1:8000/api/chat`;
-
-    fetch(apiUrl, {
+    fetch(`${API_URL_API}/chat`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -143,16 +143,17 @@ uploadConsultationFinalBtn?.addEventListener("click", function (e) {
         appointment_date_completed: getCurrentDateTime(),
     };
 
-    let apiUrl = `http://127.0.0.1:8000/api/appointment/${SUPER_DATA.appointment_information.appointment_id}`;
-
-    fetch(apiUrl, {
-        method: "PATCH",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(data),
-    })
+    fetch(
+        `${API_URL_API}/appointment/${SUPER_DATA.appointment_information.appointment_id}`,
+        {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(data),
+        }
+    )
         // Parse JSON response
         .then((response) => response.json())
         // successs
@@ -188,16 +189,17 @@ finalEndConsultationBtn.addEventListener("click", function (event) {
         step: 4,
     };
 
-    let apiUrl = `http://127.0.0.1:8000/api/appointment/${SUPER_DATA.appointment_information.appointment_id}`;
-
-    fetch(apiUrl, {
-        method: "PATCH",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(data),
-    })
+    fetch(
+        `${API_URL_API}/appointment/${SUPER_DATA.appointment_information.appointment_id}`,
+        {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(data),
+        }
+    )
         // Parse JSON response
         .then((response) => response.json())
         // successs
@@ -251,9 +253,7 @@ consultationParent.addEventListener("click", function (e) {
 // FOR SEARCH FUNCTION
 // FOR SEARCH FUNCTION
 if (appointmentId > 0) {
-    let url = `${apiUrl}/${appointmentId}`;
-
-    fetch(url, {
+    fetch(`${API_URL_API}/appointment/${appointmentId}`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -288,9 +288,6 @@ if (appointmentId > 0) {
 
             SUPER_DATA.personal_information.id = data.patient_id;
 
-            console.log(data);
-            console.log(SUPER_DATA);
-
             change_step(currentStep, progress, SUPER_DATA);
         })
         .catch((error) => {
@@ -315,8 +312,9 @@ function step_two(progress, data) {
     ).value = `${data.appointment_information.appointment_date}`;
 
     // submitAppointmentBtn.classList.add("hidden");
-    progress.querySelector(".doctor-container img").src =
-        "http://127.0.0.1:8000/images/blank_doctor.png";
+    progress.querySelector(
+        ".doctor-container img"
+    ).src = `${APP_URL}/images/blank_doctor.png`;
 
     // remove floating
     progress
@@ -478,20 +476,22 @@ function step_three(progress, data) {
     //
     //
     //
-    let url = `http://127.0.0.1:8000/api/chat/${SUPER_DATA.appointment_information.appointment_id}`;
 
     let previous_data;
 
     // Start the interval and save its ID
     let intervalId = setInterval(function () {
-        fetch(url, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(data),
-        })
+        fetch(
+            `${API_URL_API}/chat/${SUPER_DATA.appointment_information.appointment_id}`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify(data),
+            }
+        )
             // Parse JSON response
             .then((response) => response.json())
             // successs
@@ -534,16 +534,17 @@ function step_three(progress, data) {
         console.log("Interval cleared!");
     }, 300000);
 
-    let apiUrl = `http://127.0.0.1:8000/api/schedule/${SUPER_DATA.appointment_information.appointment_id}`;
-
-    fetch(apiUrl, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(data),
-    })
+    fetch(
+        `${API_URL_API}/schedule/${SUPER_DATA.appointment_information.appointment_id}`,
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(data),
+        }
+    )
         // Parse JSON response
         .then((response) => response.json())
         .then((data) => {
@@ -773,11 +774,7 @@ addScheduleFinalBtn.addEventListener("click", function () {
         schedule_date: `${date.value} ${time.value}`,
     };
 
-    console.log(data);
-
-    let apiUrl = `http://127.0.0.1:8000/api/schedule`;
-
-    fetch(apiUrl, {
+    fetch(`${API_URL_API}/schedule`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -820,8 +817,6 @@ clientInformationBtn.addEventListener("click", function (e) {
 });
 
 clientInformationModal.addEventListener("click", function (e) {
-    console.log(e.target);
-
     if (e.target.classList.contains("background-modal")) {
         clientInformationModal.classList.add("hidden");
     }

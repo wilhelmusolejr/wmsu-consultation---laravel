@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckAppointmentOwnership;
 use App\Http\Middleware\AuthenticateUser;
 
-Route::post('/appointment', [AppointmentController::class, 'store']);
+Route::post('/appointment', [AppointmentController::class, 'store'])->middleware('auth:sanctum');
 
 
 Route::post('/appointment/{id}', [AppointmentController::class, 'show'])->middleware('auth:sanctum');
