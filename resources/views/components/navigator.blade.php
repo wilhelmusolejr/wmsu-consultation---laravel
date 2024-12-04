@@ -76,6 +76,8 @@
         <form action="" class="flex flex-col gap-5">
             @csrf
 
+            <p class="hidden text-red-500 capitalize login-result">incorrect credentials</p>
+
             <x-input type="email" name="email" label="Email" />
             <x-input type="password" name="password" label="Password" />
 

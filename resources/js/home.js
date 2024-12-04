@@ -68,9 +68,12 @@ registerFormBtn?.addEventListener("click", function (e) {
 loginFormBtn?.addEventListener("click", function (e) {
     e.preventDefault();
 
+    let email_input = loginModal.querySelector("input[name='email']");
+    let password_input = loginModal.querySelector("input[name='password']");
+
     let data = {
-        email: loginModal.querySelector("input[name='email']").value,
-        password: loginModal.querySelector("input[name='password']").value,
+        email: email_input.value,
+        password: password_input.value,
     };
 
     fetch(`${API_URL_API}/login`, {
@@ -85,8 +88,20 @@ loginFormBtn?.addEventListener("click", function (e) {
         .then((response) => response.json())
         // successs
         .then((data) => {
-            localStorage.setItem("api_token", data.token);
-            window.location.reload();
+            if (data.success) {
+                localStorage.setItem("api_token", data.token);
+                window.location.reload();
+            } else {
+                email_input.value = "";
+                password_input.value = "";
+
+                loginModal.querySelector(
+                    ".login-result"
+                ).value = `${data.message}`;
+                loginModal
+                    .querySelector(".login-result")
+                    .classList.remove("hidden");
+            }
         })
         .catch((error) => {
             console.error("Error:", error);

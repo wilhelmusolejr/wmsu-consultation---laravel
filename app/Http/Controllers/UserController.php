@@ -52,6 +52,7 @@ class UserController extends Controller
             // Return the user data along with the token
             return response()->json(
                 [
+                    'success' => true,
                     'user' => $user,
                     'token' => $token,
                     'message' => 'Login successful.',
@@ -59,7 +60,10 @@ class UserController extends Controller
                 200,
             );
         } else {
-            return response()->json(['message' => 'Invalid credentials.'], 401);
+            return response()->json([
+                'success' => false,
+                'message' => 'Invalid credentials.'
+            ], 401);
         }
     }
 
